@@ -5,7 +5,7 @@ senac-games-2014
 
 A proposta deste projeto é criar pequenos jogos como forma de treinar conceitos.
 
-Abaixo segue nosso roadmap:
+Abaixo segue nosso roadmap de jogos:
 
 - Jo Ken Po
 - Pong
