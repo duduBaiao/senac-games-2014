@@ -1,1 +1,0 @@
-Aqui ficarão os games feitos com o Corona SDK.
