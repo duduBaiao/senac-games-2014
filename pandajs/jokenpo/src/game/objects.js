@@ -1,5 +1,5 @@
 game.module(
-    'donkey-pacman.objects'
+    'game.objects'
 )
 .body(function() {
 

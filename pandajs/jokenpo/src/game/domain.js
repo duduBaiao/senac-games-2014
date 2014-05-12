@@ -1,5 +1,5 @@
 game.module(
-    'jokenpo.domain'
+    'game.domain'
 )
 .body(function() {
     

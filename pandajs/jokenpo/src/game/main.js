@@ -1,11 +1,11 @@
 game.module(
-    'jokenpo.main'
+    'game.main'
 )
 .require(
     'engine.core',
-    'jokenpo.domain',
-    'jokenpo.objects',
-    'jokenpo.scenes'
+    'game.domain',
+    'game.objects',
+    'game.scenes'
 )
 .body(function() {
     

@@ -1,5 +1,5 @@
 game.module(
-    'jokenpo.scenes'
+    'game.scenes'
 )
 .require(
     'engine.scene'
@@ -11,6 +11,9 @@ game.module(
         backgroundColor: 0xffffff,
         
         init: function() {
+            
+            this.map = new Map();
         }
     });
+    
 });

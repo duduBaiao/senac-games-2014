@@ -1,5 +1,5 @@
 game.module(
-    'donkey-pacman.scenes'
+    'game.scenes'
 )
 .require(
     'engine.scene'
