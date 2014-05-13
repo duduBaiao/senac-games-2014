@@ -3,12 +3,13 @@ game.module(
 )
 .require(
     'engine.core',
+    'engine.physics',
+    'engine.particle',
     'game.assets',
-    'game.objects',
     'game.scenes'
 )
-.body(function() {
-    
+.body(function(){
+
     game.start(SceneGame, 540, 720);
-    
+
 });
