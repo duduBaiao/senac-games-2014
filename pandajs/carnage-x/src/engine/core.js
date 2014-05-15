@@ -1,4 +1,3 @@
-
 // Panda.js HTML5 game engine
 
 // created by Eemeli Kelokorpi
@@ -30,7 +29,7 @@ var core = {
         Current engine version.
         @property {String} version
     **/
-    version: '1.4.0',
+    version: '1.5.0',
     /**
         Engine settings.
         @property {Object} config
@@ -113,12 +112,17 @@ var core = {
     next: 1,
     anims: {},
 
+    /**
+        Get JSON data.
+        @method getJSON
+        @param {String} id
+    **/
     getJSON: function(id) {
         return this.json[this.assets[id]];
     },
 
     /**
-        Copy object
+        Copy object.
         @method copy
         @param {Object} object
     **/
@@ -210,6 +214,7 @@ var core = {
     },
 
     /**
+        Test fullscreen support.
         @method fullscreenSupport
         @return {Boolean} Return true, if browser supports fullscreen mode.
     **/
@@ -269,7 +274,7 @@ var core = {
     },
 
     /**
-        Require modules for module.
+        Require module.
         @method require
         @param {Array} modules
     **/
@@ -400,7 +405,7 @@ var core = {
                     }
                 }
                 module.loaded = true;
-                module.body();
+                module.body(this);
                 moduleLoaded = true;
                 i--;
             }
@@ -579,8 +584,10 @@ var core = {
         this.device.crosswalk = /Crosswalk/i.test(navigator.userAgent);
         this.device.cocoonJS = !!navigator.isCocoonJS;
         this.device.ejecta = /Ejecta/i.test(navigator.userAgent);
+        this.device.facebook = /FB/i.test(navigator.userAgent);
 
         this.device.mobile = this.device.iOS || this.device.android || this.device.wp || this.device.wt;
+        if (this.device.wpApp) this.device.mobile = false;
 
         if (typeof navigator.plugins === 'undefined' || navigator.plugins.length === 0) {
             try {
@@ -595,15 +602,13 @@ var core = {
             this.device.flash = !!navigator.plugins['Shockwave Flash'];
         }
 
-        // This is going to be used on Windows Phone App
-        // if (this.device.wp) {
-        //     if (typeof windowexternal.notify) !== 'undefined') {
-        //         window.console.log = function(message) {
-        //             window.external.notify(message);
-        //         };
-        //     }
-        // }
-
+        // Console log for Windows Phone 8 App
+        if (this.device.wpApp) {
+            window.console.log = function(message) {
+                window.external.notify(message);
+            };
+        }
+    
         var i;
         if (this.device.iOS && this.config.iOS) {
             for (i in this.config.iOS) this.config[i] = this.config.iOS[i];
@@ -618,7 +623,7 @@ var core = {
         }
 
         this.config.sourceFolder = this.config.sourceFolder || 'src';
-        this.config.mediaFolder = this.config.mediaFolder ? this.config.mediaFolder + '/' : '';
+        this.config.mediaFolder = this.config.mediaFolder ? this.config.mediaFolder + '/' : 'media/';
 
         var metaTags = document.getElementsByTagName('meta');
         var viewportFound = false;
@@ -666,9 +671,11 @@ var fnTest = /xyz/.test(function() {
     @class Class
 **/
 core.Class = function() {};
+
 /**
     Extend class.
     @method extend
+    @param {Object} prop
     @return {game.Class} Returns extended class
 **/
 core.Class.extend = function(prop) {
@@ -682,6 +689,7 @@ core.Class.extend = function(prop) {
             /**
                 Call functions parent function.
                 @method _super
+                @param {Array} arguments
             **/
             var tmp = this._super;
             this._super = parent[name];
@@ -710,6 +718,7 @@ core.Class.extend = function(prop) {
                 /**
                     This method is called before init.
                     @method staticInit
+                    @param {Array} arguments
                 **/
                 var obj = this.staticInit.apply(this, arguments);
                 if (obj) {
@@ -725,6 +734,7 @@ core.Class.extend = function(prop) {
                 /**
                     This method is called, when you create new instance of the class.
                     @method init
+                    @param {Array} arguments
                 **/
                 this.init.apply(this, arguments);
             }
@@ -738,6 +748,7 @@ core.Class.extend = function(prop) {
     /**
         Inject class.
         @method inject
+        @param {Object} prop
     **/
     Class.inject = function(prop) {
         var proto = this.prototype;

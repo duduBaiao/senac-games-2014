@@ -129,7 +129,7 @@ game.Tween = game.Class.extend({
         this.object = object;
 
         this.easingFunction = game.Tween.Easing.Linear.None;
-        this.interpolationFunction = game.Tween.Interpolation.Liner;
+        this.interpolationFunction = game.Tween.Interpolation.Linear;
 
         for (var field in object) {
             this.valuesStart[field] = parseFloat(object[field], 10);
@@ -633,16 +633,15 @@ game.Tween.Interpolation = {
             return fc(n) / fc(i) / fc(n - i);
         },
 
-        Factorial: function() {
+        Factorial: (function() {
             var a = [1];
-            return function(n) {
-                var s = 1,
-                    i;
+            return function (n) {
+                var s = 1, i;
                 if (a[n]) return a[n];
                 for (i = n; i > 1; i--) s *= i;
                 return a[n] = s;
             };
-        },
+        })(),
 
         CatmullRom: function(p0, p1, p2, p3, t) {
             var v0 = (p2 - p0) * 0.5,
