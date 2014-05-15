@@ -35,7 +35,6 @@ game.module(
             }, this);
             
             game.scene.stage.addChild(this.container);
-            game.scene.addObject(this);
         },
         
         remove: function() {

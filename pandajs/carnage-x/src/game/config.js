@@ -1,4 +1,8 @@
 pandaConfig = {
-    sourceFolder: 'src',
-    outputFile: 'game.min.js'
+	sourceFolder: 'src',
+    mediaFolder: 'media',
+    outputFile: 'carnagex.min.js',
+    system: {
+        orientation: 1
+    }
 };

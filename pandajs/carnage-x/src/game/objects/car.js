@@ -1,0 +1,2 @@
+game.module(	'game.objects.car').body(function(){		Car = game.Class.extend({		init: function(settings){			this.sprite = new game.Sprite(settings.imageName);		}
+		//implementar as regras para os carros seguirem		//as ruas e fazer as curvas automaticas	});});
