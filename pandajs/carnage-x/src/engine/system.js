@@ -83,24 +83,12 @@ game.System = game.Class.extend({
     init: function(width, height, canvasId) {
         width = width || game.System.width;
         height = height || game.System.height;
+        if (width === 'window') width = window.innerWidth;
+        if (height === 'window') height = window.innerHeight;
+        if (game.System.orientation === 'landscape') game.System.orientation = game.System.LANDSCAPE;
+        if (game.System.orientation === 'portrait') game.System.orientation = game.System.PORTRAIT;
         if (!width) width = (game.System.orientation === game.System.PORTRAIT ? 768 : 1024);
         if (!height) height = (game.System.orientation === game.System.PORTRAIT ? 927 : 672);
-
-        if (typeof game.System.aspectRatio === 'string') {
-            var ratio = game.System.aspectRatio.split(':');
-            if (ratio.length === 2) {
-                if (window.innerWidth / window.innerHeight > ratio[0] / ratio[1]) {
-                    height = window.innerHeight;
-                    width = (height / ratio[1]) * ratio[0];
-                }
-                else {
-                    width = window.innerWidth;
-                    height = (width / ratio[0]) * ratio[1];
-                }
-                game.System.hires = false;
-                game.System.scale = false;
-            }
-        }
 
         if (game.System.hires) {
             if (typeof game.System.hiresWidth === 'number' && typeof game.System.hiresHeight === 'number') {
@@ -564,50 +552,57 @@ game.System.orientation = game.System.PORTRAIT;
 /**
     Body background color.
     @attribute {String} bgColor
+    @default null
 **/
-game.System.bgColor = '#000000';
+game.System.bgColor = null;
 /**
     Body background color for mobile.
     @attribute {String} bgColorMobile
+    @default null
 **/
 game.System.bgColorMobile = null;
 /**
     Body background color for mobile rotate screen.
     @attribute {String} bgColorRotate
+    @default null
 **/
 game.System.bgColorRotate = null;
 /**
     Body background image.
     @attribute {String} bgImage
+    @default null
 **/
 game.System.bgImage = null;
 /**
     Body background image for mobile.
     @attribute {String} bgImageMobile
+    @default null
 **/
 game.System.bgImageMobile = null;
 /**
     Body background image for mobile rotate screen.
     @attribute {String} bgImageRotate
+    @default null
 **/
 game.System.bgImageRotate = null;
 /**
     Body background image position.
     @attribute {String} bgPosition
+    @default null
 **/
 game.System.bgPosition = null;
 /**
     Rotate message for mobile.
     @attribute {String} rotateMsg
-    @default Please rotate your device
+    @default null
 **/
-game.System.rotateMsg = 'Please rotate your device';
+game.System.rotateMsg = null;
 /**
     Rotate image for mobile.
     @attribute {URL} rotateImg
     @default null
 **/
-game.System.rotateImg = 'rotate.png';
+game.System.rotateImg = null;
 /**
     Enable WebGL renderer.
     @attribute {Boolean} webGL
@@ -626,8 +621,5 @@ game.System.transparent = false;
     @default false
 **/
 game.System.antialias = false;
-
-// Testing, is this useful?
-game.System.aspectRatio = null;
 
 });
