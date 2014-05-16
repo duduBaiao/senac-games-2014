@@ -1,5 +1,5 @@
 game.module(
-	'game.spritex'
+	'game.objects.spritex'
 )
 .require(
 	'engine.sprite'

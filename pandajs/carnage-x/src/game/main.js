@@ -7,7 +7,7 @@ game.module(
     'engine.particle',
     'engine.keyboard',
     'game.assets',
-    'game.scenes'
+    'game.scenes.mainscene'
 )
 .body(function(){
 	
@@ -41,7 +41,7 @@ game.module(
 	    }
 	});
 	
-	game.start(SceneMain);
-	//game.start(SceneGame);
-	//game.start(SceneTest);
+	game.start(MainScene);
+	//game.start(GameScene);
+	//game.start(TestScene);
 });

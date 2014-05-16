@@ -11,7 +11,11 @@ game.module(
     game.addAsset('sprites/loadingMask.png', 'loadingMask');
     game.addAsset('sprites/loadingText.png', 'loadingText');
     
-    game.addAsset('sprites/start.png', 'start');
+    game.addAsset('sprites/mainScreen.png', 'mainScreen');
+    game.addAsset('sprites/btnCredits.png', 'btnCredits');
+    game.addAsset('sprites/btnStart.png', 'btnStart');
+    game.addAsset('sprites/btnHiScore.png', 'btnHiScore');
+    game.addAsset('sprites/btnHowToPlay.png', 'btnHowToPlay');
     
     game.addAsset('sprites/pausedTitle.png', 'pauseTitle');
     game.addAsset('sprites/bgPaused.png', 'bgPause');
