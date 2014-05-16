@@ -7,7 +7,7 @@ game.module(
 .body(function() {
     
     // Sprites
-	game.addAsset('sprites/loadingBg.png', 'loadingBg');
+    game.addAsset('sprites/loadingBg.png', 'loadingBg');
     game.addAsset('sprites/loadingMask.png', 'loadingMask');
     game.addAsset('sprites/loadingText.png', 'loadingText');
     
@@ -43,5 +43,5 @@ game.module(
     
     // Sounds
     game.addAudio('sound/explosion.m4a', 'explosion');
-    game.addAudio('sound/music.m4a', 'music');
+    game.addAudio('sound/music.m4a', 'music');    
 });

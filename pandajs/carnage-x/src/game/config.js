@@ -1,5 +1,5 @@
 pandaConfig = {
-	sourceFolder: 'src',
+    sourceFolder: 'src',
     mediaFolder: 'media',
     outputFile: 'carnagex.min.js',
     system: {

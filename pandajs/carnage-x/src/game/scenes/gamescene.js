@@ -10,18 +10,18 @@ game.module(
 )
 .body(function() {
     
-	var input = new game.Keyboard();
-	
-	/*scene principal do jogo*/
     GameScene = game.Scene.extend({
         
         backgroundColor: 0xffffff,
         currentMapIndex: 0,
         
         init: function() {
+            
+            this.input = new game.Keyboard();
+            
             this.loadNextMap();
             
-            game.audio.musicVolume = 0.2;
+            //game.audio.musicVolume = 0.2;
             //game.audio.playMusic('music');
             
             //this.player = new Player();
@@ -31,6 +31,7 @@ game.module(
             if (this.map) {
                 this.map.remove();
             }
+            
             this.map = new Map(this.currentMapIndex);
         }
     });
