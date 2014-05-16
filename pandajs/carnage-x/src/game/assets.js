@@ -42,6 +42,6 @@ game.module(
     game.addAsset('sprites/missil.png', 'missil');
     
     // Sounds
-    game.addAudio('sound/explosion.m4a', 'explosion');
-    game.addAudio('sound/music.m4a', 'music');    
+    //game.addAudio('sound/explosion.m4a', 'explosion');
+    //game.addAudio('sound/music.m4a', 'music');    
 });
