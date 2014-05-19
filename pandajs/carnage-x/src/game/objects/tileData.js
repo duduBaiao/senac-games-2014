@@ -5,8 +5,11 @@ game.module(
     
     TileData = game.Class.extend({
         
-        init: function(code, position) {
+        init: function(code, y, x, position) {
             this.isRoad = (TileData.TYPES.ROAD.indexOf(code[0]) >= 0);
+            
+            this.x = x;
+            this.y = y;
             
             this.position = position;
             

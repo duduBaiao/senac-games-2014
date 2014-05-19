@@ -38,6 +38,7 @@ game.module(
         },
         
         update: function() {
+            this._super();
         }
     });
 });

@@ -10,9 +10,6 @@ game.module(
     
     Map = game.Class.extend({
         
-        TILE_WIDTH: 64,
-        TILE_HALF_WIDTH: 32,
-        
         init: function(mapIndex) {
             
             console.log("Loading map index: " + mapIndex);
@@ -30,13 +27,13 @@ game.module(
                 _.each(row, function(column, columnIndex) {
                     
                     var sprite = new game.Sprite(column,
-                                        (columnIndex * this.TILE_WIDTH) + this.TILE_HALF_WIDTH,
-                                        (rowIndex * this.TILE_WIDTH) + this.TILE_HALF_WIDTH,
-                                        {anchor: {x:0.5, y:0.5}});
+                                        (columnIndex * Map.TILE_WIDTH) + Map.TILE_HALF_WIDTH,
+                                        (rowIndex * Map.TILE_WIDTH) + Map.TILE_HALF_WIDTH,
+                                        {anchor: {x: 0.5, y: 0.5}});
                     
                     this.container.addChild(sprite);
                     
-                    tileRow.push(new TileData(column, sprite.position));
+                    tileRow.push(new TileData(column, this.tiles.length, tileRow.length, sprite.position));
                     
                 }, this);
                 
@@ -46,21 +43,34 @@ game.module(
             
             this.levelName = level.name;
             
-            this.spawnAt = {x: (level.spawnAt.x * this.TILE_WIDTH) + this.TILE_HALF_WIDTH,
-                            y: (level.spawnAt.y * this.TILE_WIDTH) + this.TILE_HALF_WIDTH,
+            this.spawnAt = {x: (level.spawnAt.x * Map.TILE_WIDTH) + Map.TILE_HALF_WIDTH,
+                            y: (level.spawnAt.y * Map.TILE_WIDTH) + Map.TILE_HALF_WIDTH,
                             direction: level.spawnAt.direction};
             
             game.scene.stage.addChild(this.container);
+        },
+        
+        tileForPosition: function(position) {
+            var x = Math.floor(position.x / Map.TILE_WIDTH);
+            var y = Math.floor(position.y / Map.TILE_WIDTH);
+            
+            return this.tiles[y][x];
         },
         
         remove: function() {
             this.container.remove.bind(this);
             
             this._super();
-        },
-        
-        addChild: function(sprite) {
-            this.container.addChild(sprite);
         }
     });
+    
+    _.extend(Map,
+        {
+            TILE_WIDTH: 64.0
+        });
+    
+    _.extend(Map,
+        {
+            TILE_HALF_WIDTH: Map.TILE_WIDTH / 2.0
+        });
 });
