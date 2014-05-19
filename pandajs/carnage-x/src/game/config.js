@@ -3,6 +3,6 @@ pandaConfig = {
     mediaFolder: 'media',
     outputFile: 'carnagex.min.js',
     system: {
-        orientation: 1
+        orientation: 'landscape'
     }
 };
