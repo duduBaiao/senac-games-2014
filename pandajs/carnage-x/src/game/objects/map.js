@@ -3,7 +3,8 @@ game.module(
 )
 .require(
     'engine.sprite',
-    'game.objects.level'
+    'game.objects.level',
+    'game.objects.tileData'
 )
 .body(function() {
     
@@ -16,11 +17,15 @@ game.module(
             
             console.log("Loading map index: " + mapIndex);
             
-            var levelData = Level.data[mapIndex];
+            var level = Level[mapIndex];
             
             this.container = new game.Container();
             
-            _.each(levelData, function(row, rowIndex) {
+            this.tiles = [];
+            
+            _.each(level.data, function(row, rowIndex) {
+                
+                var tileRow = [];
                 
                 _.each(row, function(column, columnIndex) {
                     
@@ -31,8 +36,19 @@ game.module(
                     
                     this.container.addChild(sprite);
                     
+                    tileRow.push(new TileData(column, sprite.position));
+                    
                 }, this);
+                
+                this.tiles.push(tileRow);
+                
             }, this);
+            
+            this.levelName = level.name;
+            
+            this.spawnAt = {x: (level.spawnAt.x * this.TILE_WIDTH) + this.TILE_HALF_WIDTH,
+                            y: (level.spawnAt.y * this.TILE_WIDTH) + this.TILE_HALF_WIDTH,
+                            direction: level.spawnAt.direction};
             
             game.scene.stage.addChild(this.container);
         },
@@ -41,6 +57,10 @@ game.module(
             this.container.remove.bind(this);
             
             this._super();
+        },
+        
+        addChild: function(sprite) {
+            this.container.addChild(sprite);
         }
     });
 });

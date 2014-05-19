@@ -21,6 +21,8 @@ game.module(
             
             this.loadNextMap();
             
+            this.player = new Player();
+            
             //game.audio.musicVolume = 0.2;
             //game.audio.playMusic('music');
             
@@ -33,6 +35,9 @@ game.module(
             }
             
             this.map = new Map(this.currentMapIndex);
+        },
+        
+        update: function() {
         }
     });
 });

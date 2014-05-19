@@ -34,12 +34,12 @@ game.module(
     game.addAsset('sprites/roadX4.png', 'x4');
     game.addAsset('sprites/roadX5.png', 'x5');
     
-    game.addAsset('sprites/blueCar.png', 'blue');
-    game.addAsset('sprites/redCar.png', 'red');
-    game.addAsset('sprites/yellowCar.png', 'yellow');
-    game.addAsset('sprites/blackCar.png', 'black');
-    game.addAsset('sprites/greenCar.png', 'green');
-    game.addAsset('sprites/missil.png', 'missil');
+    game.addAsset('sprites/blueCar.png', 'blueCar');
+    game.addAsset('sprites/redCar.png', 'redCar');
+    game.addAsset('sprites/yellowCar.png', 'yellowCar');
+    game.addAsset('sprites/blackCar.png', 'blackCar');
+    game.addAsset('sprites/greenCar.png', 'greenCar');
+    game.addAsset('sprites/missile.png', 'missile');
     
     // Sounds
     //game.addAudio('sound/explosion.m4a', 'explosion');
