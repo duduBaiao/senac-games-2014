@@ -5,35 +5,38 @@ game.module(
     
     TileData = game.Class.extend({
         
-        DIRECTIONS: {
-            left: 0,
-            up: 1,
-            right: 2,
-            down: 3
-        },
-        
-        TYPES: {
-            ROAD: 'rcx',
-            
-            'c1': [2, 3],
-            'c2': [0, 3],
-            'c3': [0, 1],
-            'c4': [1, 2],
-            'rh': [0, 2],
-            'rv': [1, 3],
-            'x1': [0, 2, 3],
-            'x2': [0, 1, 3],
-            'x3': [0, 1, 2],
-            'x4': [1, 2, 3],
-            'x5': [0, 1, 2, 3],
-        },
-        
         init: function(code, position) {
-            this.isRoad = (this.TYPES.ROAD.indexOf(code[0]) >= 0);
-            
-            this.directions = this.TYPES[code] || [];
+            this.isRoad = (TileData.TYPES.ROAD.indexOf(code[0]) >= 0);
             
             this.position = position;
+            
+            this.allowedDirections = TileData.TYPES[code] || [];
         }
     });
+    
+    _.extend(TileData,
+        {
+            DIRECTIONS: {
+                up: 0,
+                right: 1,
+                down: 2,
+                left: 3
+            },
+            
+            TYPES: {
+                ROAD: 'rcx',
+                
+                'c1': ['right', 'down'],
+                'c2': ['down', 'left'],
+                'c3': ['up', 'left'],
+                'c4': ['up', 'right'],
+                'rh': ['right', 'left'],
+                'rv': ['up', 'down'],
+                'x1': ['right', 'down', 'left'],
+                'x2': ['up', 'down', 'left'],
+                'x3': ['up', 'right', 'left'],
+                'x4': ['up', 'right', 'down'],
+                'x5': ['up', 'right', 'down', 'left']
+            }
+        });
 });
