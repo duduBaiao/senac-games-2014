@@ -19,11 +19,11 @@ game.module(
     
     _.extend(TileData,
         {
-            DIRECTIONS: {
-                up: 0,
-                right: 1,
-                down: 2,
-                left: 3
+            DIRECTIONS_VECTORS: {
+                up:    new game.Vector(0, -1),
+                right: new game.Vector(1,  0),
+                down:  new game.Vector(0,  1),
+                left:  new game.Vector(-1, 0)
             },
             
             TYPES: {
