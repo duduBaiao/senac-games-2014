@@ -29,7 +29,9 @@ game.module(
                     var sprite = new game.Sprite(column,
                                         (columnIndex * Map.TILE_WIDTH) + Map.TILE_HALF_WIDTH,
                                         (rowIndex * Map.TILE_WIDTH) + Map.TILE_HALF_WIDTH,
-                                        {anchor: {x: 0.5, y: 0.5}});
+                                        {anchor: {x: 0.5, y: 0.5},
+                                         width: Map.TILE_WIDTH,
+                                         height: Map.TILE_WIDTH});
                     
                     this.container.addChild(sprite);
                     
@@ -66,7 +68,7 @@ game.module(
     
     _.extend(Map,
         {
-            TILE_WIDTH: 64.0
+            TILE_WIDTH: 90
         });
     
     _.extend(Map,

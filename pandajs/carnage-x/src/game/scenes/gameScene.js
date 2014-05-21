@@ -39,6 +39,21 @@ game.module(
         
         update: function() {
             this._super();
+            
+            var halfWidth = game.system.width / 2.0;
+            var halfHeight = game.system.height / 2.0;
+            
+            if ((this.player.sprite.position.x > halfWidth) &&
+                (this.player.sprite.position.x < (this.map.container.getBounds().width - halfWidth))) {
+                    
+                this.map.container.position.x = halfWidth - this.player.sprite.position.x;
+            }
+            
+            if ((this.player.sprite.position.y > halfHeight) &&
+                (this.player.sprite.position.y < (this.map.container.getBounds().height - halfHeight))) {
+                    
+                this.map.container.position.y = halfHeight - this.player.sprite.position.y;
+            }
         }
     });
 });
