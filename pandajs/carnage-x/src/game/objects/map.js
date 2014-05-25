@@ -43,9 +43,7 @@ game.module(
             
             this.levelName = level.name;
             
-            this.spawnAt = {x: (level.spawnAt.x * Map.TILE_WIDTH) + Map.TILE_HALF_WIDTH,
-                            y: (level.spawnAt.y * Map.TILE_WIDTH) + Map.TILE_HALF_WIDTH,
-                            direction: level.spawnAt.direction};
+            this.spawnAt = level.spawnAt;
             
             game.scene.stage.addChild(this.container);
         },

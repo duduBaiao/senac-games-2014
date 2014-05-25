@@ -22,7 +22,11 @@ game.module(
                         ['w','c4','rh','rh','c3','w' ,'c4','rh','rh','c3','w' ,'c4','rh','rh','rh','c3','w'],
                         ['w','w' ,'w' ,'w' ,'w' ,'w' ,'w' ,'w' ,'w' ,'w' ,'w' ,'w' ,'w' ,'w' ,'w' ,'w', 'w']
                     ],
-                spawnAt: {x: 9, y: 6, direction: 'up'}
+                spawnAt: {
+                    player: {x: 9, y: 6, direction: 'up'},
+                    enemies: [{x: 1, y: 1, direction: 'right'},
+                              {x: 15, y: 10, direction: 'left'}]
+                }
             }
         ];
 });

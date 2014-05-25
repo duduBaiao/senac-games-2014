@@ -23,6 +23,8 @@ game.module(
             this.player = new Player();
             
             this.spriteToFollow = this.player.sprite;
+            
+            this.spawnEnemies();
         },
         
         loadNextMap: function() {
@@ -31,6 +33,15 @@ game.module(
             }
             
             this.map = new Map(this.currentMapIndex);
+        },
+        
+        spawnEnemies: function() {
+            
+            _.each(game.scene.map.spawnAt.enemies, function(spawnAt) {
+                
+                var enemy = new Enemy({spawnAt: spawnAt});
+                
+            }, this);
         },
         
         recalculateCameraPosition: function() {
