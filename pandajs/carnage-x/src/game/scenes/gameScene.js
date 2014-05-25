@@ -18,14 +18,11 @@ game.module(
         
         init: function() {
             
-            this.input = new game.Keyboard();
-            
             this.loadNextMap();
             
             this.player = new Player();
             
-            //game.audio.musicVolume = 0.2;
-            //game.audio.playMusic('music');
+            this.spriteToFollow = this.player.sprite;
         },
         
         loadNextMap: function() {
@@ -41,21 +38,39 @@ game.module(
             var halfWidth = game.system.width / 2.0;
             var halfHeight = game.system.height / 2.0;
             
-            if ((this.player.sprite.position.x > halfWidth) &&
-                (this.player.sprite.position.x < (this.map.container.getBounds().width - halfWidth))) {
+            if ((this.spriteToFollow.position.x > halfWidth) &&
+                (this.spriteToFollow.position.x < (this.map.container.getBounds().width - halfWidth))) {
                 
-                this.map.container.position.x = halfWidth - this.player.sprite.position.x;
+                this.map.container.position.x = halfWidth - this.spriteToFollow.position.x;
             }
             
-            if ((this.player.sprite.position.y > halfHeight) &&
-                (this.player.sprite.position.y < (this.map.container.getBounds().height - halfHeight))) {
+            if ((this.spriteToFollow.position.y > halfHeight) &&
+                (this.spriteToFollow.position.y < (this.map.container.getBounds().height - halfHeight))) {
                 
-                this.map.container.position.y = halfHeight - this.player.sprite.position.y;
+                this.map.container.position.y = halfHeight - this.spriteToFollow.position.y;
+            }
+        },
+        
+        processInputs: function() {
+            
+            if (game.keyboard.down('UP')) {
+                this.player.requestedDirection = 'up';
+            }
+            else if (game.keyboard.down('RIGHT')) {
+                this.player.requestedDirection = 'right';
+            }
+            else if (game.keyboard.down('DOWN')) {
+                this.player.requestedDirection = 'down';
+            }
+            else if (game.keyboard.down('LEFT')) {
+                this.player.requestedDirection = 'left';
             }
         },
         
         update: function() {
             this._super();
+            
+            this.processInputs();
             
             this.recalculateCameraPosition();
         }

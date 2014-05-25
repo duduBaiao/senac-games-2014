@@ -12,8 +12,6 @@ game.module(
         
         init: function(mapIndex) {
             
-            console.log("Loading map index: " + mapIndex);
-            
             var level = Level[mapIndex];
             
             this.container = new game.Container();
@@ -66,13 +64,7 @@ game.module(
         }
     });
     
-    _.extend(Map,
-        {
-            TILE_WIDTH: 90
-        });
+    Map.TILE_WIDTH = 90;
+    Map.TILE_HALF_WIDTH = Map.TILE_WIDTH / 2.0;
     
-    _.extend(Map,
-        {
-            TILE_HALF_WIDTH: Map.TILE_WIDTH / 2.0
-        });
 });
