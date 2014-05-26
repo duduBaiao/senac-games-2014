@@ -56,9 +56,7 @@ game.module(
         },
         
         remove: function() {
-            this.container.remove.bind(this);
-            
-            this._super();
+            game.scene.stage.removeChild(this.container);
         }
     });
     
