@@ -21,19 +21,25 @@ game.module(
             
             this.loadNextMap();
             
-            this.player = new Player();
-            
-            this.spriteToFollow = this.player.sprite;
+            this.spawnPlayer();
             
             this.spawnEnemies();
         },
         
         loadNextMap: function() {
+            
             if (this.map) {
                 this.map.remove();
             }
             
             this.map = new Map(this.currentMapIndex);
+        },
+        
+        spawnPlayer: function() {
+            
+            this.player = new Player();
+            
+            this.spriteToFollow = this.player.sprite;
         },
         
         spawnEnemies: function() {
@@ -79,17 +85,18 @@ game.module(
             }
         },
         
-        keyup: function(key) {
+        keydown: function(key) {
             
             if (key == 'SPACE') {
-                var missile = new Missile({x: this.player.sprite.position.x,
-                                           y: this.player.sprite.position.y,
-                                           direction: this.player.direction});
+                this.fire();
             }
         },
         
         fire: function() {
             
+            var missile = new Missile({x: this.player.sprite.position.x,
+                                       y: this.player.sprite.position.y,
+                                       direction: this.player.direction});
         },
         
         update: function() {
