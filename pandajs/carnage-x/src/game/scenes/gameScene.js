@@ -7,7 +7,8 @@ game.module(
     'game.objects.player',
     'game.objects.enemy',
     'game.screens.pauseScreen',
-    'game.utils'
+    'game.utils',
+    'game.objects.missile'
 )
 .body(function() {
     
@@ -76,6 +77,19 @@ game.module(
             else if (game.keyboard.down('LEFT')) {
                 this.player.requestedDirection = 'left';
             }
+        },
+        
+        keyup: function(key) {
+            
+            if (key == 'SPACE') {
+                var missile = new Missile({x: this.player.sprite.position.x,
+                                           y: this.player.sprite.position.y,
+                                           direction: this.player.direction});
+            }
+        },
+        
+        fire: function() {
+            
         },
         
         update: function() {
