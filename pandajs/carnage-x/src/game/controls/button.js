@@ -1,6 +1,9 @@
 game.module(
     'game.controls.button'
 )
+.require(
+    'engine.sprite'
+)
 .body(function(){
     
     Button = game.Sprite.extend({

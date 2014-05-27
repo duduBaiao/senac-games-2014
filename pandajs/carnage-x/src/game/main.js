@@ -6,6 +6,7 @@ game.module(
     'engine.physics',
     'engine.particle',
     'engine.keyboard',
+    'engine.sprite',
     'game.assets',
     'game.scenes.mainScene'
 )
