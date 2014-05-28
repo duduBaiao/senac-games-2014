@@ -4,7 +4,6 @@ pandaConfig = {
     outputFile: 'carnagex.min.js',
     system: {
         orientation: 'landscape',
-        resizeToFill: true,
-        scaleToFit: true
+        resizeToFill: true
     }
 };
