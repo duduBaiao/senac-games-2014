@@ -45,6 +45,9 @@ game.module(
             
             this.spawnAt = level.spawnAt;
             
+            this.dimensions = {height: Map.TILE_WIDTH * this.tiles.length,
+                               width: Map.TILE_WIDTH * this.tiles[0].length};
+            
             game.scene.stage.addChild(this.container);
         },
         

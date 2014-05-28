@@ -29,7 +29,7 @@ var core = {
         Current engine version.
         @property {String} version
     **/
-    version: '1.5.0',
+    version: '1.5.2',
     /**
         Engine settings.
         @property {Object} config
@@ -103,7 +103,6 @@ var core = {
     json: {},
     renderer: null,
     modules: {},
-    resources: [],
     nocache: '',
     current: null,
     loadQueue: [],
@@ -111,6 +110,9 @@ var core = {
     DOMLoaded: false,
     next: 1,
     anims: {},
+
+    assetQueue: [],
+    audioQueue: {},
 
     /**
         Get JSON data.
@@ -233,7 +235,7 @@ var core = {
         id = id || path;
         path = this.config.mediaFolder + path + this.nocache;
         this.assets[id] = path;
-        if (this.resources.indexOf(path) === -1) this.resources.push(path);
+        if (this.assetQueue.indexOf(path) === -1) this.assetQueue.push(path);
         return id;
     },
 
@@ -247,7 +249,7 @@ var core = {
     addAudio: function(path, id) {
         id = id || path;
         path = this.config.mediaFolder + path + this.nocache;
-        this.Audio.queue[path] = id;
+        this.audioQueue[path] = id;
         return id;
     },
 
@@ -323,36 +325,8 @@ var core = {
             this.plugins[name] = new (this.plugins[name])();
         }
 
-        this.loader = loaderClass || this.Loader;
-        var loader = new this.loader(window[this.System.startScene] || this[this.System.startScene] || scene);
-        loader.start();
-    },
-
-    Math: {
-        /**
-            Distance between two points.
-            @method Math.distance
-            @param {Number} x
-            @param {Number} y
-            @param {Number} x2
-            @param {Number} y2
-            @return {Number}
-        **/
-        distance: function(x, y, x2, y2) {
-            x = x2 - x;
-            y = y2 - y;
-            return Math.sqrt(x * x + y * y);
-        },
-
-        /**
-            Generate random number between `min` and `max`.
-            @method Math.random
-            @param {Number} min
-            @param {Number} max
-        **/
-        random: function(min, max) {
-            return Math.random() * (max - min) + min;
-        }
+        this.loader = new (loaderClass || this.Loader)(scene);
+        if (!this.system.rotateScreenVisible) this.loader.start();
     },
 
     loadScript: function(name, requiredFrom) {
@@ -471,6 +445,23 @@ var core = {
             else throw('Canvas not supported');
         }
 
+        // Native Math extensions
+        Math.distance = function(x, y, x2, y2) {
+            x = x2 - x;
+            y = y2 - y;
+            return Math.sqrt(x * x + y * y);
+        };
+
+        Math.randomBetween = function(min, max) {
+            return Math.random() * (max - min) + min;
+        };
+
+        Math.randomInt = function(min, max) {
+            return Math.round(Math.randomBetween(min, max));
+        };
+
+        this.Math = Math; // deprecated
+
         // Native object extensions
         Number.prototype.limit = function(min, max) {
             var i = this;
@@ -574,7 +565,6 @@ var core = {
         this.device.wp7 = /Windows Phone OS 7/i.test(navigator.userAgent);
         this.device.wp8 = /Windows Phone 8/i.test(navigator.userAgent);
         this.device.wp = this.device.wp7 || this.device.wp8;
-        this.device.wpApp = (this.device.wp && typeof window.external !== 'undefined' && typeof window.external.notify !== 'undefined');
 
         // Windows Tablet
         this.device.wt = (this.device.ie && /Tablet/i.test(navigator.userAgent));
@@ -587,9 +577,8 @@ var core = {
         this.device.facebook = /FB/i.test(navigator.userAgent);
 
         this.device.mobile = this.device.iOS || this.device.android || this.device.wp || this.device.wt;
-        if (this.device.wpApp) this.device.mobile = false;
 
-        if (typeof navigator.plugins === 'undefined' || navigator.plugins.length === 0) {
+        if (typeof navigator.plugins === 'undefined' || navigator.plugins.length === 0) {
             try {
                 new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
                 this.device.flash = true;
@@ -601,15 +590,20 @@ var core = {
         else {
             this.device.flash = !!navigator.plugins['Shockwave Flash'];
         }
-
-        // Console log for Windows Phone 8 App
-        if (this.device.wpApp) {
-            window.console.log = function(message) {
-                window.external.notify(message);
-            };
-        }
     
         var i;
+        if (this.device.iPod && this.config.iPod) {
+            for (i in this.config.iPod) this.config[i] = this.config.iPod[i];
+        }
+
+        if (this.device.iPhone && this.config.iPhone) {
+            for (i in this.config.iPhone) this.config[i] = this.config.iPhone[i];
+        }
+
+        if (this.device.iPad && this.config.iPad) {
+            for (i in this.config.iPad) this.config[i] = this.config.iPad[i];
+        }
+
         if (this.device.iOS && this.config.iOS) {
             for (i in this.config.iOS) this.config[i] = this.config.iOS[i];
         }

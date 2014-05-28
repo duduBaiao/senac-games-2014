@@ -57,13 +57,13 @@ game.module(
             var halfHeight = game.system.height / 2.0;
             
             if ((this.spriteToFollow.position.x > halfWidth) &&
-                (this.spriteToFollow.position.x < (this.map.container.getBounds().width - halfWidth))) {
+                (this.spriteToFollow.position.x < (this.map.dimensions.width - halfWidth))) {
                 
                 this.map.container.position.x = halfWidth - this.spriteToFollow.position.x;
             }
             
             if ((this.spriteToFollow.position.y > halfHeight) &&
-                (this.spriteToFollow.position.y < (this.map.container.getBounds().height - halfHeight))) {
+                (this.spriteToFollow.position.y < (this.map.dimensions.height - halfHeight))) {
                 
                 this.map.container.position.y = halfHeight - this.spriteToFollow.position.y;
             }

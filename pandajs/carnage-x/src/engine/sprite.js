@@ -73,7 +73,7 @@ game.Sprite = PIXI.Sprite.extend({
     @param {Object} [settings]
 **/
 game.Spine = PIXI.Spine.extend({
-    init: function(id, settings) {
+    init: function(id, settings) {
         this._super(game.assets[id] || id);
         game.merge(this, settings);
     },
@@ -125,6 +125,11 @@ game.Container = PIXI.DisplayObjectContainer.extend({
     addChild: function(obj) {
         this._super(obj);
         if (game.debugDraw && obj.interactive && obj.debugDraw) game.debugDraw.addSprite(obj);
+    },
+
+    addTo: function(container) {
+        container.addChild(this);
+        return this;
     }
 });
 
