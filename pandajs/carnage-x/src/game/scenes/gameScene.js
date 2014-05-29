@@ -96,7 +96,7 @@ game.module(
             
             if (game.Math.distance(
                         event.global.x, event.global.y,
-                        event.swipeX, event.swipeY) < this.swipeDist) {
+                        event.swipeX, event.swipeY) < (this.swipeDist / 2.0)) {
                 
                 this.fire();
             }
