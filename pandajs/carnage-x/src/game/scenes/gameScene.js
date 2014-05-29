@@ -92,6 +92,21 @@ game.module(
             }
         },
         
+        click: function(event) {
+            
+            if (game.Math.distance(
+                        event.global.x, event.global.y,
+                        event.swipeX, event.swipeY) < this.swipeDist) {
+                
+                this.fire();
+            }
+        },
+        
+        swipe: function(dir) {
+            
+            this.player.requestedDirection = dir;
+        },
+        
         fire: function() {
             
             var missile = new Missile({x: this.player.sprite.position.x,
