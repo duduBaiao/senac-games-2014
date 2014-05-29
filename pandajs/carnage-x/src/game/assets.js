@@ -34,8 +34,16 @@ game.module(
     game.addAsset('sprites/roadX4.png', 'x4');
     game.addAsset('sprites/roadX5.png', 'x5');
     
-    game.addAsset('sprites/blueCar.png', 'blueCar');
-    game.addAsset('sprites/redCar.png', 'redCar');
+    game.addAsset('sprites/car/redCar_up.png', 'redCar_up');
+    game.addAsset('sprites/car/redCar_right.png', 'redCar_right');
+    game.addAsset('sprites/car/redCar_down.png', 'redCar_down');
+    game.addAsset('sprites/car/redCar_left.png', 'redCar_left');
+    
+    game.addAsset('sprites/car/blueCar_up.png', 'blueCar_up');
+    game.addAsset('sprites/car/blueCar_right.png', 'blueCar_right');
+    game.addAsset('sprites/car/blueCar_down.png', 'blueCar_down');
+    game.addAsset('sprites/car/blueCar_left.png', 'blueCar_left');
+    
     game.addAsset('sprites/yellowCar.png', 'yellowCar');
     game.addAsset('sprites/blackCar.png', 'blackCar');
     game.addAsset('sprites/greenCar.png', 'greenCar');
