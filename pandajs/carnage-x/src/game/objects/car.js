@@ -48,9 +48,11 @@ game.module(
                 this.sprite.rotation = newAngle;
             }
             else {
+                var timeAdjust = (this.isOppositeDirections(this.lastDirection, this.direction) ? 1.6 : 1.0);
+                
                 var rotateTween =
                     new game.Tween(this.sprite)
-                        .to({rotation: newAngle}, 80.0 * 400.0 / Car.VELOCITY)
+                        .to({rotation: newAngle}, 80.0 * 400.0 / Car.VELOCITY * timeAdjust)
                         .start();
             }
             
@@ -133,7 +135,7 @@ game.module(
     _.extend(Car,
         {
            VELOCITY: 400.0,
-           WIDTH: 100,
+           WIDTH: 94,
            HEIGHT: 120
         });
 });

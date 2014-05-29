@@ -2,7 +2,8 @@ game.module(
     'game.objects.missile'
 )
 .require(
-    'game.objects.baseObject'
+    'game.objects.baseObject',
+    'game.objects.car'
 )
 .body(function(){
     
@@ -10,9 +11,11 @@ game.module(
         
         init: function(settings) {
             
+            var directionVector = TileData.DIRECTIONS_VECTORS[settings.direction];
+            
             this.sprite = new game.Sprite('missile',
                                           settings.x,
-                                          settings.y,
+                                          settings.y - Math.abs(11 * directionVector.x),
                                           {
                                               anchor: {x: 0.5, y: 0.5},
                                               width: Missile.WIDTH,
@@ -53,7 +56,7 @@ game.module(
     
     _.extend(Missile,
         {
-           VELOCITY: 700,
+           VELOCITY: 700.0,
            WIDTH: 22.5,
            HEIGHT: 91.5
         });
