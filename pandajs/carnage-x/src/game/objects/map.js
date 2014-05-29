@@ -63,7 +63,7 @@ game.module(
         }
     });
     
-    Map.TILE_WIDTH = 90;
+    Map.TILE_WIDTH = 128;
     Map.TILE_HALF_WIDTH = Map.TILE_WIDTH / 2.0;
     
 });

@@ -12,14 +12,21 @@ game.module(
         
         init: function(settings) {
             
-            this.sprite = new game.Sprite(settings.imageName,
-                                          (settings.spawnAt.x * Map.TILE_WIDTH) + Map.TILE_HALF_WIDTH,
-                                          (settings.spawnAt.y * Map.TILE_WIDTH) + Map.TILE_HALF_WIDTH,
-                                          {
-                                              anchor: {x: 0.5, y: 0.45},
-                                              width: Car.WIDTH,
-                                              height: Car.HEIGHT
-                                          });
+            this.sprite = new game.MovieClip([
+                game.Texture.fromImage(settings.imageName + '_up'),
+                game.Texture.fromImage(settings.imageName + '_right'),
+                game.Texture.fromImage(settings.imageName + '_down'),
+                game.Texture.fromImage(settings.imageName + '_left')
+            ]);
+            
+            this.sprite.position.x = (settings.spawnAt.x * Map.TILE_WIDTH) + Map.TILE_HALF_WIDTH;
+            this.sprite.position.y = (settings.spawnAt.y * Map.TILE_WIDTH) + Map.TILE_HALF_WIDTH;
+            
+            this.sprite.anchor.x = 0.5;
+            this.sprite.anchor.y = 0.35;
+            
+            this.sprite.width = Car.WIDTH;
+            this.sprite.height = Car.HEIGHT;
             
             game.scene.map.container.addChild(this.sprite);
             game.scene.addObject(this);
@@ -33,19 +40,21 @@ game.module(
             
             game.tweenEngine.stopTweensForObject(this.sprite);
             
+            this.lastDirection = this.direction;
+            
+            this.direction = this.requestedDirection = direction;
+            
             if (now) {
                 this.sprite.rotation = newAngle;
             }
             else {
                 var rotateTween =
                     new game.Tween(this.sprite)
-                        .to({rotation: newAngle}, 100)
+                        .to({rotation: newAngle}, 80.0 * 400.0 / Car.VELOCITY)
                         .start();
             }
             
-            this.lastDirection = this.direction;
-            
-            this.direction = this.requestedDirection = direction;
+            this.sprite.gotoAndStop(TileData.ANIMATION_FRAMES[direction]);
         },
         
         isCloseEnoughToTile: function(tileData) {
@@ -123,8 +132,8 @@ game.module(
     
     _.extend(Car,
         {
-           VELOCITY: 400,
-           WIDTH: 51,
-           HEIGHT: 84
+           VELOCITY: 400.0,
+           WIDTH: 100,
+           HEIGHT: 120
         });
 });
