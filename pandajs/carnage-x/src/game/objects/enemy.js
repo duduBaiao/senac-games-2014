@@ -13,7 +13,13 @@ game.module(
         init: function(settings) {
             
             this._super({imageName: 'blueCar',
-                         spawnAt: settings.spawnAt});
+                         spawnAt: settings.spawnAt,
+                         collideAgainst: BaseObject.COLLISION_GROUPS.player,
+                         collisionGroup: BaseObject.COLLISION_GROUPS.enemies});
+        },
+        
+        afterCollide: function(other) {
+            console.log('Enemy.afterCollide! ' + other.collisionGroup);
         },
         
         isAlive: function() {

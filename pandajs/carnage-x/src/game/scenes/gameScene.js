@@ -19,11 +19,18 @@ game.module(
         
         init: function() {
             
+            this.initializePhysics();
+            
             this.loadNextMap();
             
             this.spawnPlayer();
             
             this.spawnEnemies();
+        },
+        
+        initializePhysics: function() {
+            
+            this.world = new game.World(0, 0); // no gravity!
         },
         
         loadNextMap: function() {

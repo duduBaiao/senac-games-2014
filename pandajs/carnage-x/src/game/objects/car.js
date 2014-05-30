@@ -2,6 +2,7 @@ game.module(
     'game.objects.car'
 )
 .require(
+    'engine.physics',
     'game.objects.tileData',
     'game.objects.map',
     'game.objects.baseObject'
@@ -32,6 +33,12 @@ game.module(
             game.scene.addObject(this);
             
             this.rotateToDirection(settings.spawnAt.direction, true);
+            
+            this.initializePhysics({shapePercentualWidth: 0.8,
+                                    shapePercentualHeight: 0.9,
+                                    anchorDiff: 0.19,
+                                    collideAgainst: settings.collideAgainst,
+                                    collisionGroup: settings.collisionGroup});
         },
         
         rotateToDirection: function(direction, now) {
@@ -123,12 +130,14 @@ game.module(
                 this.chooseNextDirection(tileData);
             }
             
-            var displacement = Car.VELOCITY * game.system.delta;
+            var displacement = Car.VELOCITY * game.scale * game.system.delta;
             
             var directionVector = TileData.DIRECTIONS_VECTORS[this.direction];
             
             this.sprite.position.x += (displacement * directionVector.x);
             this.sprite.position.y += (displacement * directionVector.y);
+            
+            this.updateBody();
         }
     });
     

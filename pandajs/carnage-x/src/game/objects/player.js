@@ -11,7 +11,9 @@ game.module(
         init: function() {
             
             this._super({imageName: 'redCar',
-                         spawnAt: game.scene.map.spawnAt.player});
+                         spawnAt: game.scene.map.spawnAt.player,
+                         collideAgainst: BaseObject.COLLISION_GROUPS.enemies,
+                         collisionGroup: BaseObject.COLLISION_GROUPS.player});
         }
     });
 });

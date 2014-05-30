@@ -28,11 +28,14 @@ game.module(
             this.direction = settings.direction;
             
             this.sprite.rotation = this.angleForDirection(this.direction);
+            
+            this.initializePhysics({collideAgainst: BaseObject.COLLISION_GROUPS.enemies,
+                                    collisionGroup: BaseObject.COLLISION_GROUPS.missiles});
         },
         
         update: function() {
             
-            var displacement = Missile.VELOCITY * game.system.delta;
+            var displacement = Missile.VELOCITY * game.scale * game.system.delta;
             
             var directionVector = TileData.DIRECTIONS_VECTORS[this.direction];
             
@@ -46,11 +49,19 @@ game.module(
                 
                 game.scene.map.container.removeChild(this.sprite);
                 game.scene.removeObject(this);
+                
+                this.removeBody();
             }
             else {
                 
                 this.sprite.position = newPosition;
             }
+            
+            this.updateBody();
+        },
+        
+        afterCollide: function(other) {
+            console.log('Missile.afterCollide! ' + other.collisionGroup);
         }
     });
     
