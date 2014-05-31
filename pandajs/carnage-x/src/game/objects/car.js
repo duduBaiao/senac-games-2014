@@ -5,7 +5,8 @@ game.module(
     'engine.physics',
     'game.objects.tileData',
     'game.objects.map',
-    'game.objects.baseObject'
+    'game.objects.baseObject',
+    'game.objects.explosion'
 )
 .body(function(){
     
@@ -29,8 +30,7 @@ game.module(
             this.sprite.width = Car.WIDTH;
             this.sprite.height = Car.HEIGHT;
             
-            game.scene.map.container.addChild(this.sprite);
-            game.scene.addObject(this);
+            this.addToScene();
             
             this.rotateToDirection(settings.spawnAt.direction, true);
             
@@ -161,7 +161,11 @@ game.module(
         
         destroy: function() {
             
-            this.remove();
+            var explosion = new Explosion({name: 'carDie',
+                                           x: this.sprite.position.x,
+                                           y: this.sprite.position.y});
+            
+            this.removeFromScene();
         }
     });
     

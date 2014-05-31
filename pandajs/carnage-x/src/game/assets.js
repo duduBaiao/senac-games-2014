@@ -46,6 +46,14 @@ game.module(
     
     game.addAsset('sprites/shot/missile.png', 'shot');
     
+    game.addAsset('sprites/explosion/carDie1.png', 'carDie1');
+    game.addAsset('sprites/explosion/carDie2.png', 'carDie2');
+    game.addAsset('sprites/explosion/carDie3.png', 'carDie3');
+    game.addAsset('sprites/explosion/carDie4.png', 'carDie4');
+    game.addAsset('sprites/explosion/carDie5.png', 'carDie5');
+    game.addAsset('sprites/explosion/carDie6.png', 'carDie6');
+    game.addAsset('sprites/explosion/carDie7.png', 'carDie7');
+    
     // Sounds
     //game.addAudio('sound/explosion.m4a', 'explosion');
     //game.addAudio('sound/music.m4a', 'music');    

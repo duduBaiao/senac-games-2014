@@ -140,6 +140,10 @@ game.module(
         
         removeGameObject: function(obj) {
             
+            if (obj._removed) return;
+            
+            obj._removed = true;
+            
             this.map.container.removeChild(obj.sprite);
             this.removeObject(obj);
             
@@ -155,9 +159,9 @@ game.module(
         },
         
         endLevel: function() {
-            this.inputEnabled = false;
+            // this.inputEnabled = false;
             
-            console.log('the level is over! all inputs are disabled.');
+            console.log('the level is over!');
         }
     });
 });

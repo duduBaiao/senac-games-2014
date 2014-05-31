@@ -29,7 +29,8 @@ game.module(
             
             this.sprite.rotation = this.angleForDirection(this.direction);
             
-            this.initializePhysics({collideAgainst: BaseObject.COLLISION_GROUPS.enemies,
+            this.initializePhysics({shapePercentualHeight: 0.8,
+                                    collideAgainst: BaseObject.COLLISION_GROUPS.enemies,
                                     collisionGroup: BaseObject.COLLISION_GROUPS.shots});
         },
         
@@ -47,7 +48,9 @@ game.module(
                 (newPosition.x >= (game.scene.map.container.getBounds().width - Map.TILE_HALF_WIDTH)) ||
                 (newPosition.y >= (game.scene.map.container.getBounds().height - Map.TILE_HALF_WIDTH))) {
                 
-                this.remove();
+                this.hitSomething();
+                
+                this.removeFromScene();
             }
             else {
                 
@@ -57,12 +60,31 @@ game.module(
             this.updateBody();
         },
         
+        hitSomething: function() {
+            
+            var diffVector = this.angleToVector(this.body.rotation);
+            
+            var anchorDiff = this.sprite.anchor.y * this.sprite.height;
+            
+            diffVector.multiply(anchorDiff,
+                                anchorDiff);
+            
+            var explosion = new Explosion({name: 'carHit',
+                                           x: this.sprite.position.x + diffVector.x,
+                                           y: this.sprite.position.y + diffVector.y});
+        },
+        
         afterCollide: function(other) {
             console.log('Shot.afterCollide! ' + other.collisionGroup);
             
-            this.remove();
-            
             other.gameObject.decreaseLife(Shot.DAMAGE);
+            
+            if (other.gameObject) {
+                
+                this.hitSomething();
+            }
+            
+            this.removeFromScene();
         }
     });
     

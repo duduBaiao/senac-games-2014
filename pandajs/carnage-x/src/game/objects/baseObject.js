@@ -35,6 +35,13 @@ game.module(
             game.scene.world.addBody(this.body);
         },
         
+        angleToVector: function(angle) {
+            
+            var v = new game.Vector(0, -1);
+            
+            return v.rotate(angle);
+        },
+        
         angleToOppositeVector: function(angle) {
             
             var v = new game.Vector(0, 1);
@@ -58,9 +65,12 @@ game.module(
         },
         
         removeBody: function() {
-            this.body.gameObject = null;
             
-            game.scene.world.removeBody(this.body);
+            if (this.body) {
+                this.body.gameObject = null;
+                
+                game.scene.world.removeBody(this.body);
+            }
         },
         
         angleForDirection: function(direction) {
@@ -74,7 +84,12 @@ game.module(
             return (this.sprite.rotation + difference);
         },
         
-        remove: function() {
+        addToScene: function() {
+            game.scene.map.container.addChild(this.sprite);
+            game.scene.addObject(this);
+        },
+        
+        removeFromScene: function() {
             game.scene.removeGameObject(this);
         }        
     });
