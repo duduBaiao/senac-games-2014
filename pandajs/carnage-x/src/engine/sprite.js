@@ -62,6 +62,16 @@ game.Sprite = PIXI.Sprite.extend({
     addChild: function(obj) {
         this._super(obj);
         if (game.debugDraw && obj.interactive) game.debugDraw.addSprite(obj);
+    },
+
+    /**
+        Add sprite to container.
+        @method addTo
+        @param {game.Container} container
+    **/
+    addTo: function(container) {
+        container.addChild(this);
+        return this;
     }
 });
 
@@ -164,6 +174,11 @@ game.TilingSprite = PIXI.TilingSprite.extend({
     update: function() {
         this.tilePosition.x += this.speed.x * game.system.delta;
         this.tilePosition.y += this.speed.y * game.system.delta;
+    },
+
+    addTo: function(container) {
+        container.addChild(this);
+        return this;
     }
 });
 

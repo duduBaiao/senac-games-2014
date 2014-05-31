@@ -2,6 +2,7 @@ game.module(
     'game.scenes.gameScene'
 )
 .require(
+    'engine.camera',
     'game.objects.level',
     'game.objects.map',
     'game.objects.player',
@@ -26,6 +27,8 @@ game.module(
             this.spawnPlayer();
             
             this.spawnEnemies();
+            
+            this.initializeCamera();
         },
         
         initializePhysics: function() {
@@ -45,8 +48,6 @@ game.module(
         spawnPlayer: function() {
             
             this.player = new Player();
-            
-            this.spriteToFollow = this.player.sprite;
         },
         
         spawnEnemies: function() {
@@ -58,22 +59,17 @@ game.module(
             }, this);
         },
         
-        recalculateCameraPosition: function() {
+        initializeCamera: function() {
             
-            var halfWidth = game.system.width / 2.0;
-            var halfHeight = game.system.height / 2.0;
+            this.camera = new game.Camera(this.player.sprite.position.x,
+                                          this.player.sprite.position.y);
             
-            if ((this.spriteToFollow.position.x > halfWidth) &&
-                (this.spriteToFollow.position.x < (this.map.dimensions.width - halfWidth))) {
-                
-                this.map.container.position.x = halfWidth - this.spriteToFollow.position.x;
-            }
+            this.camera.target = this.player.sprite;
+            this.camera.container = this.map.container;
+            this.camera.limit = new game.Point(this.map.dimensions.width, this.map.dimensions.height);
             
-            if ((this.spriteToFollow.position.y > halfHeight) &&
-                (this.spriteToFollow.position.y < (this.map.dimensions.height - halfHeight))) {
-                
-                this.map.container.position.y = halfHeight - this.spriteToFollow.position.y;
-            }
+            this.camera.maxSpeed = Player.VELOCITY * 1.5;
+            this.camera.acceleration = 6;
         },
         
         processInputs: function() {
@@ -101,9 +97,9 @@ game.module(
         
         click: function(event) {
             
-            if (game.Math.distance(
-                        event.global.x, event.global.y,
-                        event.swipeX, event.swipeY) < (this.swipeDist / 2.0)) {
+            if (Math.distance(
+                    event.global.x, event.global.y,
+                    event.swipeX, event.swipeY) < (this.swipeDist / 2.0)) {
                 
                 this.fire();
             }
@@ -125,8 +121,6 @@ game.module(
             this._super();
             
             this.processInputs();
-            
-            this.recalculateCameraPosition();
         }
     });
 });

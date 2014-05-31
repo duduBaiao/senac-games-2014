@@ -69,15 +69,7 @@ game.System = game.Class.extend({
         @property {Number} gameLoopId
     **/
     gameLoopId: 0,
-    /**
-        New scene to be set on end of run loop.
-        @property {game.Scene} newSceneClass
-    **/
     newSceneClass: null,
-    /**
-        Is game engine running.
-        @property {Boolean} running
-    **/
     running: false,
 
     init: function(width, height, canvasId) {
@@ -120,11 +112,9 @@ game.System = game.Class.extend({
             game.scale = 2;
         }
 
-        if (typeof game.System.resize !== 'undefined') game.System.scale = game.System.resize; // Deprecated
-
         this.width = width;
         this.height = height;
-        this.canvasId = canvasId || this.canvasId;
+        this.canvasId = canvasId || game.System.canvasId || this.canvasId;
         this.timer = new game.Timer();
 
         if (!document.getElementById(this.canvasId)) {
@@ -132,9 +122,6 @@ game.System = game.Class.extend({
             canvas.id = this.canvasId;
             document.body.appendChild(canvas);
         }
-
-        // Deprecated
-        if (game.System.canvas === false) game.System.webGL = true;
 
         if (game.System.webGL) this.renderer = new game.autoDetectRenderer(width, height, document.getElementById(this.canvasId), game.System.transparent, game.System.antialias);
         else this.renderer = new game.CanvasRenderer(width, height, document.getElementById(this.canvasId), game.System.transparent);
@@ -186,17 +173,6 @@ game.System = game.Class.extend({
         }, false);
 
         if (!navigator.isCocoonJS) {
-            // Deprecated
-            if (typeof game.System.backgroundColor === 'object') {
-                game.System.bgColorMobile = game.System.backgroundColor.mobile;
-                game.System.bgColorRotate = game.System.backgroundColor.rotate;
-            }
-            // Deprecated
-            if (typeof game.System.backgroundImage === 'object') {
-                game.System.bgImageMobile = game.System.backgroundImage.mobile;
-                game.System.bgImageRotate = game.System.backgroundImage.rotate;
-            }
-
             if (game.System.bgColor && !game.System.bgColorMobile) game.System.bgColorMobile = game.System.bgColor;
             if (game.System.bgColorMobile && !game.System.bgColorRotate) game.System.bgColorRotate = game.System.bgColorMobile;
 
@@ -260,10 +236,11 @@ game.System = game.Class.extend({
         else this.setSceneNow(sceneClass);
     },
 
-    setSceneNow: function(SceneClass) {
+    setSceneNow: function(sceneClass) {
         if (game.tweenEngine) game.tweenEngine.tweens.length = 0;
-        game.scene = new (SceneClass)();
+        game.scene = new (sceneClass)();
         if (game.Debug && game.Debug.enabled && !navigator.isCocoonJS) this.debug = new game.Debug();
+        this.newSceneClass = null;
         this.startRunLoop();
     },
 
@@ -287,11 +264,7 @@ game.System = game.Class.extend({
         game.scene.run();
 
         if (this.debug) this.debug.update();
-
-        if (this.newSceneClass) {
-            this.setSceneNow(this.newSceneClass);
-            this.newSceneClass = null;
-        }
+        if (this.newSceneClass) this.setSceneNow(this.newSceneClass);
     },
 
     resize: function(width, height) {
@@ -345,18 +318,19 @@ game.System = game.Class.extend({
                 };
                 img.src = game.config.mediaFolder + game.System.rotateImg;
                 img.style.position = 'relative';
+                img.style.maxWidth = '100%';
             }
         }
         else {
             // Desktop center
-            this.canvas.style.position = 'absolute';
+            if (game.System.center || game.System.left || game.System.top) this.canvas.style.position = 'absolute';
             if (game.System.center) {
                 this.canvas.style.top = 0;
                 this.canvas.style.left = 0;
                 this.canvas.style.bottom = 0;
                 this.canvas.style.right = 0;
             }
-            else {
+            else if (game.System.left || game.System.top) {
                 this.canvas.style.left = game.System.left + 'px';
                 this.canvas.style.top = game.System.top + 'px';
             }
@@ -669,5 +643,11 @@ game.System.startScene = 'SceneGame';
     @default false
 **/
 game.System.scaleToFit = false;
+/**
+    Canvas id for game.
+    @attribute {String} canvasId
+    @default null
+**/
+game.System.canvasId = null;
 
 });

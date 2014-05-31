@@ -39,6 +39,8 @@ game.module(
                                     anchorDiff: 0.19,
                                     collideAgainst: settings.collideAgainst,
                                     collisionGroup: settings.collisionGroup});
+            
+            this.velocity = settings.velocity || Car.VELOCITY;
         },
         
         rotateToDirection: function(direction, now) {
@@ -59,7 +61,7 @@ game.module(
                 
                 var rotateTween =
                     new game.Tween(this.sprite)
-                        .to({rotation: newAngle}, 80.0 * 400.0 / Car.VELOCITY * timeAdjust)
+                        .to({rotation: newAngle}, 80.0 * 400 / Car.VELOCITY * timeAdjust)
                         .start();
             }
             
@@ -68,7 +70,7 @@ game.module(
         
         isCloseEnoughToTile: function(tileData) {
             
-            return game.Math.distance(
+            return Math.distance(
                     tileData.position.x, tileData.position.y,
                     this.sprite.position.x, this.sprite.position.y) < (Map.TILE_HALF_WIDTH / 2.0);
         },
@@ -130,7 +132,7 @@ game.module(
                 this.chooseNextDirection(tileData);
             }
             
-            var displacement = Car.VELOCITY * game.scale * game.system.delta;
+            var displacement = this.velocity * game.scale * game.system.delta;
             
             var directionVector = TileData.DIRECTIONS_VECTORS[this.direction];
             
