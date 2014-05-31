@@ -200,7 +200,7 @@ game.module(
     
     _.extend(GameScene,
         {
-            CAMERA_ACCELERATION_MIN: 2,
+            CAMERA_ACCELERATION_MIN: 0,
             CAMERA_ACCELERATION_MAX: 6
         });
 });
