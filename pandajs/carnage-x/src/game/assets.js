@@ -20,19 +20,19 @@ game.module(
     game.addAsset('sprites/pausedTitle.png', 'pauseTitle');
     game.addAsset('sprites/bgPaused.png', 'bgPause');
     
-    game.addAsset('sprites/sideWalk.png', 'w');
-    game.addAsset('sprites/grass.png', 'gr');
-    game.addAsset('sprites/roadH.png', 'rh');
-    game.addAsset('sprites/roadV.png', 'rv');
-    game.addAsset('sprites/roadC1.png', 'c1');
-    game.addAsset('sprites/roadC2.png', 'c2');
-    game.addAsset('sprites/roadC3.png', 'c3');
-    game.addAsset('sprites/roadC4.png', 'c4');
-    game.addAsset('sprites/roadX1.png', 'x1');
-    game.addAsset('sprites/roadX2.png', 'x2');
-    game.addAsset('sprites/roadX3.png', 'x3');
-    game.addAsset('sprites/roadX4.png', 'x4');
-    game.addAsset('sprites/roadX5.png', 'x5');
+    game.addAsset('sprites/level/sideWalk.png', 'w');
+    game.addAsset('sprites/level/grass.png', 'gr');
+    game.addAsset('sprites/level/roadH.png', 'rh');
+    game.addAsset('sprites/level/roadV.png', 'rv');
+    game.addAsset('sprites/level/roadC1.png', 'c1');
+    game.addAsset('sprites/level/roadC2.png', 'c2');
+    game.addAsset('sprites/level/roadC3.png', 'c3');
+    game.addAsset('sprites/level/roadC4.png', 'c4');
+    game.addAsset('sprites/level/roadX1.png', 'x1');
+    game.addAsset('sprites/level/roadX2.png', 'x2');
+    game.addAsset('sprites/level/roadX3.png', 'x3');
+    game.addAsset('sprites/level/roadX4.png', 'x4');
+    game.addAsset('sprites/level/roadX5.png', 'x5');
     
     game.addAsset('sprites/car/redCar_up.png', 'redCar_up');
     game.addAsset('sprites/car/redCar_right.png', 'redCar_right');
@@ -44,10 +44,7 @@ game.module(
     game.addAsset('sprites/car/blueCar_down.png', 'blueCar_down');
     game.addAsset('sprites/car/blueCar_left.png', 'blueCar_left');
     
-    game.addAsset('sprites/yellowCar.png', 'yellowCar');
-    game.addAsset('sprites/blackCar.png', 'blackCar');
-    game.addAsset('sprites/greenCar.png', 'greenCar');
-    game.addAsset('sprites/missile.png', 'shot');
+    game.addAsset('sprites/shot/missile.png', 'shot');
     
     // Sounds
     //game.addAudio('sound/explosion.m4a', 'explosion');
