@@ -34,9 +34,8 @@ game.module(
             
             this.rotateToDirection(settings.spawnAt.direction, true);
             
-            this.initializePhysics({shapePercentualWidth: 0.8,
-                                    shapePercentualHeight: 0.9,
-                                    anchorDiff: 0.19,
+            this.initializePhysics({width: Car.WIDTH,
+                                    anchorDiff: Car.WIDTH * 0.2,
                                     collideAgainst: settings.collideAgainst,
                                     collisionGroup: settings.collisionGroup});
             

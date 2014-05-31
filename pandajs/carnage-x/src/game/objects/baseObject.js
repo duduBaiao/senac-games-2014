@@ -15,15 +15,15 @@ game.module(
                 collisionGroup: settings.collisionGroup
             });
             
-            var shape = new game.Rectangle(this.sprite.width * (settings.shapePercentualWidth || 1),
-                                           this.sprite.height * (settings.shapePercentualHeight || 1));
+            var shape = new game.Rectangle(settings.width,
+                                           settings.width);
             this.body.addShape(shape);
             
             if (this.afterCollide) {
                 this.body.afterCollide = this.afterCollide.bind(this);
             }
             
-            this.anchorDiff = (settings.anchorDiff || 0) * this.sprite.height;
+            this.anchorDiff = settings.anchorDiff || 0;
             
             this.body._originalUpdate = this.body.update;
             this.body.update = function() {};

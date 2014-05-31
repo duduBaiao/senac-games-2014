@@ -29,7 +29,8 @@ game.module(
             
             this.sprite.rotation = this.angleForDirection(this.direction);
             
-            this.initializePhysics({shapePercentualHeight: 0.8,
+            this.initializePhysics({width: Shot.WIDTH,
+                                    anchorDiff: Shot.HEIGHT * -0.2,
                                     collideAgainst: BaseObject.COLLISION_GROUPS.enemies,
                                     collisionGroup: BaseObject.COLLISION_GROUPS.shots});
         },
