@@ -162,7 +162,7 @@ game.module(
                 this.camera.acceleration = GameScene.CAMERA_ACCELERATION_MIN;
             }
             else {
-                this.camera.acceleration += 0.15;
+                this.camera.acceleration += 0.05;
                 
                 this.camera.acceleration.limit(GameScene.CAMERA_ACCELERATION_MIN,
                                                GameScene.CAMERA_ACCELERATION_MAX);
@@ -200,7 +200,7 @@ game.module(
     
     _.extend(GameScene,
         {
-            CAMERA_ACCELERATION_MIN: 1,
+            CAMERA_ACCELERATION_MIN: 2,
             CAMERA_ACCELERATION_MAX: 6
         });
 });
