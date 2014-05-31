@@ -54,6 +54,8 @@ game.module(
     game.addAsset('sprites/explosion/carDie6.png', 'carDie6');
     game.addAsset('sprites/explosion/carDie7.png', 'carDie7');
     
+    game.addAsset('sprites/dummy.png', 'dummy');
+    
     // Sounds
     //game.addAudio('sound/explosion.m4a', 'explosion');
     //game.addAudio('sound/music.m4a', 'music');    

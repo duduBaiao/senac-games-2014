@@ -9,7 +9,8 @@ game.module(
     'game.objects.enemy',
     'game.screens.pauseScreen',
     'game.utils',
-    'game.objects.shot'
+    'game.objects.shot',
+    'game.objects.explosion'
 )
 .body(function() {
     
@@ -68,15 +69,28 @@ game.module(
         
         initializeCamera: function() {
             
+            this.cameraTarget =
+                new game.Sprite('dummy',
+                    this.player.sprite.position.x,
+                    this.player.sprite.position.y,
+                    {anchor: {x: 0.5, y: 0.5},
+                     width: 60,
+                     height: 60});
+                     
+            //this.map.container.addChild(this.cameraTarget);
+            
             this.camera = new game.Camera(this.player.sprite.position.x,
                                           this.player.sprite.position.y);
             
-            this.camera.target = this.player.sprite;
+            this.camera.target = this.cameraTarget;
+            
             this.camera.container = this.map.container;
             this.camera.limit = new game.Point(this.map.dimensions.width, this.map.dimensions.height);
             
-            this.camera.maxSpeed = Player.VELOCITY * 1.5;
-            this.camera.acceleration = 6;
+            this.camera.sensor.width = this.player.sprite.height;
+            this.camera.sensor.height = this.player.sprite.height;
+            
+            this.camera.acceleration = GameScene.CAMERA_ACCELERATION_MIN;
         },
         
         processInputs: function() {
@@ -133,9 +147,28 @@ game.module(
         },
         
         update: function() {
-            this._super();
-            
             this.processInputs();
+            
+            var diffVector = this.player.angleToVector(this.player.sprite.rotation);
+            
+            var distance = this.player.sprite.height * 2;
+            
+            diffVector.multiply(distance, distance);
+            
+            this.cameraTarget.position.x = this.player.sprite.position.x + diffVector.x;
+            this.cameraTarget.position.y = this.player.sprite.position.y + diffVector.y;
+            
+            if (this.player.isRotating) {
+                this.camera.acceleration = GameScene.CAMERA_ACCELERATION_MIN;
+            }
+            else {
+                this.camera.acceleration += 0.15;
+                
+                this.camera.acceleration.limit(GameScene.CAMERA_ACCELERATION_MIN,
+                                               GameScene.CAMERA_ACCELERATION_MAX);
+            }
+            
+            this._super();
         },
         
         removeGameObject: function(obj) {
@@ -164,4 +197,10 @@ game.module(
             console.log('the level is over!');
         }
     });
+    
+    _.extend(GameScene,
+        {
+            CAMERA_ACCELERATION_MIN: 1,
+            CAMERA_ACCELERATION_MAX: 6
+        });
 });

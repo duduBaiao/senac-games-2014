@@ -61,13 +61,21 @@ game.module(
             else {
                 var timeAdjust = (this.isOppositeDirections(this.lastDirection, this.direction) ? 1.6 : 1.0);
                 
+                this.isRotating = true;
+                
                 var rotateTween =
                     new game.Tween(this.sprite)
                         .to({rotation: newAngle}, 80.0 * 400 / Car.VELOCITY * timeAdjust)
-                        .start();
+                        .onComplete(this.rotateEnded.bind(this));
+                
+                rotateTween.start();
             }
             
             this.sprite.gotoAndStop(TileData.ANIMATION_FRAMES[direction]);
+        },
+        
+        rotateEnded: function() {
+            this.isRotating = false;
         },
         
         isCloseEnoughToTile: function(tileData) {
