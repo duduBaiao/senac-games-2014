@@ -9,7 +9,7 @@ game.module(
     'game.objects.enemy',
     'game.screens.pauseScreen',
     'game.utils',
-    'game.objects.missile'
+    'game.objects.shot'
 )
 .body(function() {
     
@@ -112,9 +112,9 @@ game.module(
         
         fire: function() {
             
-            var missile = new Missile({x: this.player.sprite.position.x,
-                                       y: this.player.sprite.position.y,
-                                       direction: this.player.direction});
+            var shot = new Shot({x: this.player.sprite.position.x,
+                                 y: this.player.sprite.position.y,
+                                 direction: this.player.direction});
         },
         
         update: function() {

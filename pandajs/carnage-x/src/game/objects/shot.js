@@ -1,5 +1,5 @@
 game.module(
-    'game.objects.missile'
+    'game.objects.shot'
 )
 .require(
     'game.objects.baseObject',
@@ -7,19 +7,19 @@ game.module(
 )
 .body(function(){
     
-    Missile = BaseObject.extend({
+    Shot = BaseObject.extend({
         
         init: function(settings) {
             
             var directionVector = TileData.DIRECTIONS_VECTORS[settings.direction];
             
-            this.sprite = new game.Sprite('missile',
+            this.sprite = new game.Sprite('shot',
                                           settings.x,
                                           settings.y - Math.abs(11 * directionVector.x),
                                           {
                                               anchor: {x: 0.5, y: 0.5},
-                                              width: Missile.WIDTH,
-                                              height: Missile.HEIGHT
+                                              width: Shot.WIDTH,
+                                              height: Shot.HEIGHT
                                           });
             
             game.scene.map.container.addChild(this.sprite);
@@ -30,12 +30,12 @@ game.module(
             this.sprite.rotation = this.angleForDirection(this.direction);
             
             this.initializePhysics({collideAgainst: BaseObject.COLLISION_GROUPS.enemies,
-                                    collisionGroup: BaseObject.COLLISION_GROUPS.missiles});
+                                    collisionGroup: BaseObject.COLLISION_GROUPS.shots});
         },
         
         update: function() {
             
-            var displacement = Missile.VELOCITY * game.scale * game.system.delta;
+            var displacement = Shot.VELOCITY * game.scale * game.system.delta;
             
             var directionVector = TileData.DIRECTIONS_VECTORS[this.direction];
             
@@ -61,13 +61,13 @@ game.module(
         },
         
         afterCollide: function(other) {
-            console.log('Missile.afterCollide! ' + other.collisionGroup);
+            console.log('Shot.afterCollide! ' + other.collisionGroup);
         }
     });
     
-    _.extend(Missile,
+    _.extend(Shot,
         {
-           VELOCITY: 700.0,
+           VELOCITY: Car.VELOCITY * 1.75,
            WIDTH: 22.5,
            HEIGHT: 91.5
         });

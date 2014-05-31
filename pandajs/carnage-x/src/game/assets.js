@@ -47,7 +47,7 @@ game.module(
     game.addAsset('sprites/yellowCar.png', 'yellowCar');
     game.addAsset('sprites/blackCar.png', 'blackCar');
     game.addAsset('sprites/greenCar.png', 'greenCar');
-    game.addAsset('sprites/missile.png', 'missile');
+    game.addAsset('sprites/missile.png', 'shot');
     
     // Sounds
     //game.addAudio('sound/explosion.m4a', 'explosion');

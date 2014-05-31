@@ -74,6 +74,6 @@ game.module(
     BaseObject.COLLISION_GROUPS = {
         player: 0,
         enemies: 1,
-        missiles: 2
+        shots: 2
     };
 });
