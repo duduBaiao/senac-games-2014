@@ -44,10 +44,10 @@ game.module(
             var newPosition = new PIXI.Point(this.sprite.position.x + (displacement * directionVector.x),
                                              this.sprite.position.y + (displacement * directionVector.y));
             
-            if ((newPosition.x < Map.TILE_WIDTH) ||
-                (newPosition.y < Map.TILE_WIDTH) ||
-                (newPosition.x >= (game.scene.map.container.getBounds().width - Map.TILE_HALF_WIDTH)) ||
-                (newPosition.y >= (game.scene.map.container.getBounds().height - Map.TILE_HALF_WIDTH))) {
+            if ((newPosition.x < Map.TILE_HALF_WIDTH) ||
+                (newPosition.y < Map.TILE_HALF_WIDTH) ||
+                (newPosition.x >= (game.scene.map.dimensions.width - Map.TILE_HALF_WIDTH)) ||
+                (newPosition.y >= (game.scene.map.dimensions.height - Map.TILE_HALF_WIDTH))) {
                 
                 this.hitSomething();
                 
