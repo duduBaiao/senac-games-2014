@@ -16,7 +16,12 @@ game.module(
     GameScene = game.Scene.extend({
         
         backgroundColor: 0xffffff,
+        
         currentMapIndex: 0,
+        
+        enemyCount: 0,
+        
+        inputEnabled: true,
         
         init: function() {
             
@@ -56,6 +61,8 @@ game.module(
                 
                 var enemy = new Enemy({spawnAt: spawnAt});
                 
+                this.enemyCount++;
+                
             }, this);
         },
         
@@ -74,6 +81,8 @@ game.module(
         
         processInputs: function() {
             
+            if (!this.inputEnabled) return;
+            
             if (game.keyboard.down('UP')) {
                 this.player.requestedDirection = 'up';
             }
@@ -90,12 +99,16 @@ game.module(
         
         keydown: function(key) {
             
+            if (!this.inputEnabled) return;
+            
             if (key == 'SPACE') {
                 this.fire();
             }
         },
         
         click: function(event) {
+            
+            if (!this.inputEnabled) return;
             
             if (Math.distance(
                     event.global.x, event.global.y,
@@ -106,6 +119,8 @@ game.module(
         },
         
         swipe: function(dir) {
+            
+            if (!this.inputEnabled) return;
             
             this.player.requestedDirection = dir;
         },
@@ -121,6 +136,28 @@ game.module(
             this._super();
             
             this.processInputs();
+        },
+        
+        removeGameObject: function(obj) {
+            
+            this.map.container.removeChild(obj.sprite);
+            this.removeObject(obj);
+            
+            obj.removeBody();
+            
+            if (obj instanceof Enemy) {
+                this.enemyCount--;
+                
+                if (this.enemyCount == 0) {
+                    this.endLevel();
+                }
+            }
+        },
+        
+        endLevel: function() {
+            this.inputEnabled = false;
+            
+            console.log('the level is over! all inputs are disabled.');
         }
     });
 });

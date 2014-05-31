@@ -41,6 +41,8 @@ game.module(
                                     collisionGroup: settings.collisionGroup});
             
             this.velocity = settings.velocity || Car.VELOCITY;
+            
+            this.life = Car.LIFE;
         },
         
         rotateToDirection: function(direction, now) {
@@ -140,6 +142,26 @@ game.module(
             this.sprite.position.y += (displacement * directionVector.y);
             
             this.updateBody();
+        },
+        
+        isAlive: function() {
+            
+            return (this.life > 0);
+        },
+        
+        decreaseLife: function(damage) {
+            
+            this.life -= damage;
+            
+            if (!this.isAlive()) {
+                
+                this.destroy();
+            }
+        },
+        
+        destroy: function() {
+            
+            this.remove();
         }
     });
     
@@ -147,6 +169,8 @@ game.module(
         {
            VELOCITY: 400.0,
            WIDTH: 94,
-           HEIGHT: 120
+           HEIGHT: 120,
+           
+           LIFE: 100
         });
 });

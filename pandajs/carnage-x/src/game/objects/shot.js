@@ -47,10 +47,7 @@ game.module(
                 (newPosition.x >= (game.scene.map.container.getBounds().width - Map.TILE_HALF_WIDTH)) ||
                 (newPosition.y >= (game.scene.map.container.getBounds().height - Map.TILE_HALF_WIDTH))) {
                 
-                game.scene.map.container.removeChild(this.sprite);
-                game.scene.removeObject(this);
-                
-                this.removeBody();
+                this.remove();
             }
             else {
                 
@@ -62,6 +59,10 @@ game.module(
         
         afterCollide: function(other) {
             console.log('Shot.afterCollide! ' + other.collisionGroup);
+            
+            this.remove();
+            
+            other.gameObject.decreaseLife(Shot.DAMAGE);
         }
     });
     
@@ -69,6 +70,8 @@ game.module(
         {
            VELOCITY: Car.VELOCITY * 1.75,
            WIDTH: 22.5,
-           HEIGHT: 91.5
+           HEIGHT: 91.5,
+           
+           DAMAGE: Car.LIFE / 3.0
         });
 });

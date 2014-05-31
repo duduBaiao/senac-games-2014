@@ -8,8 +8,6 @@ game.module(
     
     Enemy = Car.extend({
         
-        life: 100,
-        
         init: function(settings) {
             
             this._super({imageName: 'blueCar',
@@ -21,10 +19,6 @@ game.module(
         
         afterCollide: function(other) {
             console.log('Enemy.afterCollide! ' + other.collisionGroup);
-        },
-        
-        isAlive: function() {
-            return (this.life > 0);
         }
     });
 });

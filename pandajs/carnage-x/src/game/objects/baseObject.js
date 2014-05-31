@@ -30,6 +30,8 @@ game.module(
             
             this.updateBody();
             
+            this.body.gameObject = this;
+            
             game.scene.world.addBody(this.body);
         },
         
@@ -56,6 +58,8 @@ game.module(
         },
         
         removeBody: function() {
+            this.body.gameObject = null;
+            
             game.scene.world.removeBody(this.body);
         },
         
@@ -68,7 +72,11 @@ game.module(
             var difference = ((((newAngle - this.sprite.rotation) % (2 * Math.PI)) + (3 * Math.PI)) % (2 * Math.PI)) - Math.PI;
             
             return (this.sprite.rotation + difference);
-        }
+        },
+        
+        remove: function() {
+            game.scene.removeGameObject(this);
+        }        
     });
     
     BaseObject.COLLISION_GROUPS = {
