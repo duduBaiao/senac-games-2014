@@ -14,6 +14,8 @@ game.module(
         
         init: function(settings) {
             
+            this.stopped = false;
+            
             this.sprite = new game.MovieClip([
                 game.Texture.fromImage(settings.imageName + '_up'),
                 game.Texture.fromImage(settings.imageName + '_right'),
@@ -40,6 +42,8 @@ game.module(
                                     collisionGroup: settings.collisionGroup});
             
             this.velocity = settings.velocity || Car.VELOCITY;
+            
+            this.acceleration = this.velocity;
             
             this.life = Car.LIFE;
         },
@@ -84,16 +88,6 @@ game.module(
                     this.sprite.position.x, this.sprite.position.y) < (Map.TILE_HALF_WIDTH / 2.0);
         },
         
-        isOppositeDirections: function(currentDirection, newDirection) {
-            
-            var currentDirectionVector = TileData.DIRECTIONS_VECTORS[currentDirection];
-            var newDirectionVector = TileData.DIRECTIONS_VECTORS[newDirection];
-            
-            var dotProduct = currentDirectionVector.dot(newDirectionVector);
-            
-            return (dotProduct == -1);
-        },
-        
         chooseNextDirection: function(tileData) {
             
             var newDirection = null;
@@ -134,6 +128,8 @@ game.module(
         
         update: function() {
             
+            if (this.stopped) return;
+            
             var tileData = game.scene.map.tileForPosition(this.sprite.position);
             
             if (this.isCloseEnoughToTile(tileData)) {
@@ -141,7 +137,11 @@ game.module(
                 this.chooseNextDirection(tileData);
             }
             
-            var displacement = this.velocity * game.scale * game.system.delta;
+            var acceleration = this.acceleration + Car.ACCELERATION;
+            
+            this.acceleration = acceleration.limit(0, this.velocity);
+            
+            var displacement = this.acceleration * game.scale * game.system.delta;
             
             var directionVector = TileData.DIRECTIONS_VECTORS[this.direction];
             
@@ -171,17 +171,22 @@ game.module(
             var explosion = new Explosion({name: 'carDie',
                                            x: this.sprite.position.x,
                                            y: this.sprite.position.y});
-            
             this.removeFromScene();
         }
     });
     
     _.extend(Car,
         {
+           ACCELERATION: 4.0,
+           
            VELOCITY: 400.0,
+           
            WIDTH: 94,
            HEIGHT: 120,
            
            LIFE: 100
         });
+    
+    Car.DAMAGE = Car.LIFE / 8.0;
+    
 });

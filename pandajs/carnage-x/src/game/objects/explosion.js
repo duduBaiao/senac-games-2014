@@ -59,7 +59,7 @@ game.module(
     });
     
     Explosion.TYPES = {
-        carHit: {imageName: 'carDie', frameCount: 7, width: 60, fadeTime: 3000, animationSpeed:2, soundEffect:"hitShotSnd"},
+        shotHitCar: {imageName: 'carDie', frameCount: 7, width: 60, fadeTime: 3000, animationSpeed:2, soundEffect:"hitShotSnd"},
         carDie: {imageName: 'carDie', frameCount: 7, width: 140, fadeTime: 400, soundEffect:"explosionSnd"}
     }
 });

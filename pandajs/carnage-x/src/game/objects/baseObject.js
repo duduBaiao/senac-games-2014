@@ -8,6 +8,26 @@ game.module(
     
     BaseObject = game.Class.extend({
         
+        isOppositeDirections: function(currentDirection, newDirection) {
+            
+            var currentDirectionVector = TileData.DIRECTIONS_VECTORS[currentDirection];
+            var newDirectionVector = TileData.DIRECTIONS_VECTORS[newDirection];
+            
+            var dotProduct = currentDirectionVector.dot(newDirectionVector);
+            
+            return (dotProduct == -1);
+        },
+        
+        isPerpendicularDirections: function(currentDirection, newDirection) {
+            
+            var currentDirectionVector = TileData.DIRECTIONS_VECTORS[currentDirection];
+            var newDirectionVector = TileData.DIRECTIONS_VECTORS[newDirection];
+            
+            var dotProduct = currentDirectionVector.dot(newDirectionVector);
+            
+            return (dotProduct == 0);
+        },
+        
         initializePhysics: function(settings) {
             
             this.body = new game.Body({
@@ -82,6 +102,29 @@ game.module(
             var difference = ((((newAngle - this.sprite.rotation) % (2 * Math.PI)) + (3 * Math.PI)) % (2 * Math.PI)) - Math.PI;
             
             return (this.sprite.rotation + difference);
+        },
+        
+        stopByDuration: function(miliseconds) {
+            
+            this.stopped = true;
+            
+            game.scene.addTimer(miliseconds, (function() {
+                
+                this.stopped = false;
+                
+            }).bind(this));
+        },
+        
+        disaccelerate: function() {
+            
+            this.acceleration *= 0.05;
+        },
+        
+        stopAWhile: function() {
+            
+            this.disaccelerate();
+            
+            this.stopByDuration(100);
         },
         
         addToScene: function() {

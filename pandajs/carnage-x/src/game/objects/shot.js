@@ -72,13 +72,13 @@ game.module(
             diffVector.multiply(anchorDiff,
                                 anchorDiff);
             
-            var explosion = new Explosion({name: 'carHit',
+            var explosion = new Explosion({name: 'shotHitCar',
                                            x: this.sprite.position.x + diffVector.x,
                                            y: this.sprite.position.y + diffVector.y});
         },
         
         afterCollide: function(other) {
-            console.log('Shot.afterCollide! ' + other.collisionGroup);
+            console.log('Shot.afterCollide! other.collisionGroup: ' + other.collisionGroup);
             
             other.gameObject.decreaseLife(Shot.DAMAGE);
             
