@@ -194,7 +194,7 @@ game.module(
         },
         
         startAudio: function(){
-        	game.audio.playMusic('fase1Bg', 0.2);
+            game.audio.playMusic('fase1Bg', 0.2);
         },
         
         endLevel: function() {
