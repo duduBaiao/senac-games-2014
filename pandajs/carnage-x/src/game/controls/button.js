@@ -11,6 +11,7 @@ game.module(
         scaleUp: function() {
             this.scale.y = 1.1;
             this.scale.x = 1.1;
+            game.audio.playSound("overOptionSnd", false, 0.8);
         },
         
         scaleNormal: function() {

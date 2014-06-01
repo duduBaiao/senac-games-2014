@@ -39,6 +39,8 @@ game.module(
             this.addToScene();
             
             this.sprite.play();
+            
+            this.playExplosionSoundEffect(explosionType);
         },
         
         onComplete: function() {
@@ -49,11 +51,15 @@ game.module(
                     .onComplete(this.removeFromScene.bind(this));
             
             fadeTween.start();
+        },
+        
+        playExplosionSoundEffect: function(explosionType) {
+            game.audio.playSound(explosionType.soundEffect, false, 0.8);
         }
     });
     
     Explosion.TYPES = {
-        carHit: {imageName: 'carDie', frameCount: 7, width: 60, fadeTime: 3000, animationSpeed:2},
-        carDie: {imageName: 'carDie', frameCount: 7, width: 140, fadeTime: 400}
+        carHit: {imageName: 'carDie', frameCount: 7, width: 60, fadeTime: 3000, animationSpeed:2, soundEffect:"hitShotSnd"},
+        carDie: {imageName: 'carDie', frameCount: 7, width: 140, fadeTime: 400, soundEffect:"explosionSnd"}
     }
 });

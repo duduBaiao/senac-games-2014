@@ -33,6 +33,8 @@ game.module(
                                     anchorDiff: Shot.HEIGHT * -0.2,
                                     collideAgainst: BaseObject.COLLISION_GROUPS.enemies,
                                     collisionGroup: BaseObject.COLLISION_GROUPS.shots});
+            
+            this.playShotSoundEffect();
         },
         
         update: function() {
@@ -86,6 +88,10 @@ game.module(
             }
             
             this.removeFromScene();
+        },
+        
+        playShotSoundEffect: function() {
+            game.audio.playSound("fireBallshotSnd");
         }
     });
     

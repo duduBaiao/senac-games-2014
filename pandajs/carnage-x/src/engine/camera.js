@@ -95,7 +95,7 @@ game.Camera = game.Class.extend({
 
         game.scene.addTween(this.sensor.position, {
             x: x, y: y
-        }, speed || 1000).start();
+        }, speed || 1000).start();
     },
 
     moveSensor: function() {

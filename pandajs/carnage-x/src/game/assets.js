@@ -57,6 +57,11 @@ game.module(
     game.addAsset('sprites/dummy.png', 'dummy');
     
     // Sounds
-    //game.addAudio('sound/explosion.m4a', 'explosion');
-    //game.addAudio('sound/music.m4a', 'music');    
+    game.addAudio('sound/menuBg.m4a', 'menuBg');
+    game.addAudio('sound/btnStartSnd.m4a', 'btnStartSnd');
+    game.addAudio('sound/overOptionSnd.m4a', 'overOptionSnd');
+    game.addAudio('sound/fase1Bg.m4a', 'fase1Bg');
+    game.addAudio('sound/fireBallshotSnd.m4a', 'fireBallshotSnd');
+    game.addAudio('sound/explosionSnd.m4a', 'explosionSnd');
+    game.addAudio('sound/hitShotSnd.m4a', 'hitShotSnd');
 });

@@ -35,6 +35,8 @@ game.module(
             this.spawnEnemies();
             
             this.initializeCamera();
+            
+            this.startAudio();
         },
         
         initializePhysics: function() {
@@ -189,6 +191,10 @@ game.module(
                     this.endLevel();
                 }
             }
+        },
+        
+        startAudio: function(){
+        	game.audio.playMusic('fase1Bg', 0.2);
         },
         
         endLevel: function() {
