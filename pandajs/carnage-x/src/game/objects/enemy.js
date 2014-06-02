@@ -21,7 +21,7 @@ game.module(
             
             var otherCar = other.gameObject;
             
-            if (this.isOppositeDirections(this.direction, otherCar.direction)) {
+            if ((this.isOppositeDirections(this.direction, otherCar.direction)) || (otherCar.isRotating)) {
                 
                 this.destroy();
             }

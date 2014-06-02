@@ -28,6 +28,16 @@ game.module(
             return (dotProduct == 0);
         },
         
+        isSameDirections: function(currentDirection, newDirection) {
+            
+            var currentDirectionVector = TileData.DIRECTIONS_VECTORS[currentDirection];
+            var newDirectionVector = TileData.DIRECTIONS_VECTORS[newDirection];
+            
+            var dotProduct = currentDirectionVector.dot(newDirectionVector);
+            
+            return (dotProduct == 1);
+        },
+        
         initializePhysics: function(settings) {
             
             this.body = new game.Body({
