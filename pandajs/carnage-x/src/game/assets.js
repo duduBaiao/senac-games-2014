@@ -64,4 +64,6 @@ game.module(
     game.addAudio('sound/fireBallshotSnd.m4a', 'fireBallshotSnd');
     game.addAudio('sound/explosionSnd.m4a', 'explosionSnd');
     game.addAudio('sound/hitShotSnd.m4a', 'hitShotSnd');
+    game.addAudio('sound/carCrashSnd.m4a', 'carCrashSnd');
+    
 });

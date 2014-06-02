@@ -39,7 +39,7 @@ game.module(
                     
                     if (this.isAlive()) {
                         
-                        game.audio.playSound('explosionSnd', false, 0.5);
+                        game.audio.playSound('carCrashSnd', false, 0.5);
                     }
                 }
                 
