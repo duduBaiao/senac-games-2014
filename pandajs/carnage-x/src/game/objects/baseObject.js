@@ -38,6 +38,32 @@ game.module(
             return (dotProduct == 1);
         },
         
+        directionsIntersect: function(directionA, startPointA, directionB, startPointB) {
+            
+            var as = startPointA;
+            var bs = startPointB;
+            
+            var ad = TileData.DIRECTIONS_VECTORS[directionA].clone().multiply(Map.TILE_WIDTH, Map.TILE_WIDTH);
+            var bd = TileData.DIRECTIONS_VECTORS[directionB].clone().multiply(Map.TILE_WIDTH, Map.TILE_WIDTH);
+            
+            /*
+            Given: two rays a, b with starting points (origin vectors) as, bs, and direction vectors ad, bd.
+            
+            The two lines intersect if there is an intersection point p:
+            p = as + ad * u
+            p = bs + bd * v
+            
+            If this equation system has a solution for u>=0 and v>=0 (the positive direction is what makes them rays),
+            the rays intersect.
+            */
+            
+            var u = (as.y * bd.x + bd.y * bs.x - bs.y * bd.x - bd.y * as.x) / (ad.x * bd.y - ad.y * bd.x);
+            
+            var v = (as.x + ad.x * u - bs.x) / bd.x;
+            
+            return ((u >= 0) && (v >= 0));
+        },
+        
         initializePhysics: function(settings) {
             
             this.body = new game.Body({
