@@ -62,13 +62,13 @@ game.module(
                 this.sprite.rotation = newAngle;
             }
             else {
-                var timeAdjust = (this.isOppositeDirections(this.lastDirection, this.direction) ? 1.6 : 1.0);
+                var timeAdjust = (this.areOppositeDirections(this.lastDirection, this.direction) ? 1.6 : 1.0);
                 
                 this.isRotating = true;
                 
                 var rotateTween =
                     new game.Tween(this.sprite)
-                        .to({rotation: newAngle}, 80.0 * 400 / Car.VELOCITY * timeAdjust)
+                        .to({rotation: newAngle}, 80.0 * Car.VELOCITY_REFERENCE / Car.VELOCITY * timeAdjust)
                         .onComplete(this.rotateEnded.bind(this));
                 
                 rotateTween.start();
@@ -93,7 +93,7 @@ game.module(
             else if (tileData.allowedDirections.indexOf(this.direction) < 0) {
                 
                 if ((tileData.allowedDirections.indexOf(this.lastDirection) >= 0) &&
-                    (!this.isOppositeDirections(this.direction, this.lastDirection))) {
+                    (!this.areOppositeDirections(this.direction, this.lastDirection))) {
                     
                     newDirection = this.lastDirection;
                 }
@@ -102,7 +102,7 @@ game.module(
                         
                         if (!newDirection) {
                             
-                            if (!this.isOppositeDirections(this.direction, tileDirection)) {
+                            if (!this.areOppositeDirections(this.direction, tileDirection)) {
                                 newDirection = tileDirection;
                             }
                         }
@@ -170,9 +170,11 @@ game.module(
     
     _.extend(Car,
         {
-           ACCELERATION: 4.0,
+           ACCELERATION: 4.0 / 1.0,
            
-           VELOCITY: 400.0,
+           VELOCITY: 400.0 / 1.0,
+           
+           VELOCITY_REFERENCE: 400.0,
            
            WIDTH: 94,
            HEIGHT: 120,

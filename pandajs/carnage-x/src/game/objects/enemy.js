@@ -15,75 +15,88 @@ game.module(
                          collideAgainst: BaseObject.COLLISION_GROUPS.player,
                          collisionGroup: BaseObject.COLLISION_GROUPS.enemies,
                          velocity: Car.VELOCITY * 0.85});
+            
+            this.body.collide = this.handleCollision.bind(this);
         },
         
-        afterCollide: function(other) {
+        afterCollide: function() {
+            // console.log('afterCollide!');
+        },
+        
+        handleCollision: function(other) {
+            
+            // console.log('handleCollision!');
             
             var otherCar = other.gameObject;
             
-            if ((this.isOppositeDirections(this.direction, otherCar.direction))
-                ||
-                (this.directionsIntersect(this.direction, this.sprite.position,
-                                          otherCar.direction, otherCar.sprite.position))) {
+            if (this.areOppositeDirections(this.direction, otherCar.direction)) {
+                
+                console.log('enemy destroyed! is opposite directions!');
+                
                 this.destroy();
             }
             else {
                 
-                if (!((game.system.timer.last - this.lastCollisionTime) < 5000)) {
-                    
-                    this.lastCollisionTime = game.system.timer.last;
-                    
-                    this.decreaseLife(Car.DAMAGE);
-                    
-                    console.log('enemy.life: ' + this.life);
-                    
-                    if (this.isAlive()) {
-                        
-                        game.audio.playSound('carCrashSnd', false, 0.5);
-                    }
-                }
+                var thisTileData = game.scene.map.tileForPosition(this.sprite.position);
+                var otherTileData = game.scene.map.tileForPosition(otherCar.sprite.position);
                 
-                if (!(this.stopped || otherCar.stopped)) {
+                var sameDirections = this.areSameAngleDirections(this.sprite.rotation, otherCar.sprite.rotation);
+                
+                if ((thisTileData.x == otherTileData.x) &&
+                    (thisTileData.y == otherTileData.y) &&
+                    (!sameDirections)) {
                     
-                    if (this.isPerpendicularDirections(this.direction, otherCar.direction)) {
+                    console.log('enemy destroyed! same tile!');
+                    
+                    this.destroy();
+                }
+                else {
+                    
+                    if (!((game.system.timer.last - this.lastCollisionTime) < 4000)) {
                         
-                        thisTileData = game.scene.map.tileForPosition(this.sprite.position);
-                        otherTileData = game.scene.map.tileForPosition(otherCar.sprite.position);
+                        this.lastCollisionTime = game.system.timer.last;
                         
-                        // same tile
-                        if ((thisTileData.x == otherTileData.x) &&
-                            (thisTileData.y == otherTileData.y)) {
+                        this.decreaseLife(Car.DAMAGE);
+                        
+                        console.log('enemy.life: ' + this.life);
+                        
+                        if (this.isAlive()) {
+                            game.audio.playSound('carCrashSnd', false, 0.5);
+                        }
+                    }
+                    
+                    if (((this.direction == 'down') && (this.sprite.position.y < otherCar.sprite.position.y)) ||
+                         ((this.direction == 'up') && (this.sprite.position.y > otherCar.sprite.position.y)) ||
+                         ((this.direction == 'right') && (this.sprite.position.x < otherCar.sprite.position.x)) ||
+                         ((this.direction == 'left') && (this.sprite.position.x > otherCar.sprite.position.x))) {
+                        
+                        if (sameDirections) {
+                            console.log('enemy disaccelerated!');
                             
-                            if (Math.distance(thisTileData.position.x, thisTileData.position.y,
-                                              this.sprite.position.x, this.sprite.position.y)
-                                >
-                                Math.distance(thisTileData.position.x, thisTileData.position.y,
-                                              otherCar.sprite.position.x, otherCar.sprite.position.y)) {
-                                this.stopAWhile();
-                            }
-                            else {
-                                otherCar.stopAWhile();
-                            }
+                            this.disaccelerate();
                         }
                         else {
+                            console.log('enemy stopped!');
                             
-                            if (((this.direction == 'down') && (this.sprite.position.y < otherCar.sprite.position.y)) ||
-                                ((this.direction == 'up') && (this.sprite.position.y > otherCar.sprite.position.y)) ||
-                                ((this.direction == 'right') && (this.sprite.position.x < otherCar.sprite.position.x)) ||
-                                ((this.direction == 'left') && (this.sprite.position.x > otherCar.sprite.position.x))) {
-                                
-                                this.stopAWhile();
-                            }
-                            else {
-                                otherCar.stopAWhile();
-                            }
+                            this.stopAWhile();
                         }
                     }
                     else {
-                        otherCar.disaccelerate();
+                        if (sameDirections) {
+                            console.log('player disaccelerated!');
+                            
+                            otherCar.disaccelerate();
+                        }
+                        else {
+                            console.log('player stopped!');
+                            
+                            otherCar.stopAWhile();
+                        }
                     }
                 }
             }
+            
+            return true;
         }
     });
 });
