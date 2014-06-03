@@ -6,7 +6,6 @@ game.module(
     TileData = game.Class.extend({
         
         init: function(code, y, x, position) {
-            this.isRoad = (TileData.TYPES.ROAD.indexOf(code[0]) >= 0);
             
             this.x = x;
             this.y = y;
@@ -34,19 +33,17 @@ game.module(
             },
             
             TYPES: {
-                ROAD: 'rcx',
-                
-                'c1': ['right', 'down'],
-                'c2': ['down', 'left'],
-                'c3': ['up', 'left'],
-                'c4': ['up', 'right'],
+                'rul': ['right', 'down'],
+                'rur': ['down', 'left'],
+                'rrd': ['up', 'left'],
+                'rdl': ['up', 'right'],
                 'rh': ['right', 'left'],
                 'rv': ['up', 'down'],
-                'x1': ['right', 'down', 'left'],
-                'x2': ['up', 'down', 'left'],
-                'x3': ['up', 'right', 'left'],
-                'x4': ['up', 'right', 'down'],
-                'x5': ['up', 'right', 'down', 'left']
+                'rtd': ['right', 'down', 'left'],
+                'rtl': ['up', 'down', 'left'],
+                'rtu': ['up', 'right', 'left'],
+                'rtr': ['up', 'right', 'down'],
+                'rc': ['up', 'right', 'down', 'left']
             }
         });
 });

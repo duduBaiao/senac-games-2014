@@ -22,17 +22,38 @@ game.module(
     
     game.addAsset('sprites/level/sideWalk.png', 'w');
     game.addAsset('sprites/level/grass.png', 'gr');
+    
     game.addAsset('sprites/level/roadH.png', 'rh');
     game.addAsset('sprites/level/roadV.png', 'rv');
-    game.addAsset('sprites/level/roadC1.png', 'c1');
-    game.addAsset('sprites/level/roadC2.png', 'c2');
-    game.addAsset('sprites/level/roadC3.png', 'c3');
-    game.addAsset('sprites/level/roadC4.png', 'c4');
-    game.addAsset('sprites/level/roadX1.png', 'x1');
-    game.addAsset('sprites/level/roadX2.png', 'x2');
-    game.addAsset('sprites/level/roadX3.png', 'x3');
-    game.addAsset('sprites/level/roadX4.png', 'x4');
-    game.addAsset('sprites/level/roadX5.png', 'x5');
+    game.addAsset('sprites/level/roadUpLeft.png', 'rul');
+    game.addAsset('sprites/level/roadUpRight.png', 'rur');
+    game.addAsset('sprites/level/roadRightDown.png', 'rrd');
+    game.addAsset('sprites/level/roadDownLeft.png', 'rdl');
+    game.addAsset('sprites/level/roadTDown.png', 'rtd');
+    game.addAsset('sprites/level/roadTLeft.png', 'rtl');
+    game.addAsset('sprites/level/roadTUp.png', 'rtu');
+    game.addAsset('sprites/level/roadTRight.png', 'rtr');
+    game.addAsset('sprites/level/roadCross.png', 'rc');
+    
+    game.addAsset('sprites/level/guardUpLeft.png', 'gul');
+    game.addAsset('sprites/level/guardLeft.png', 'gl');
+    game.addAsset('sprites/level/guardDownLeft.png', 'gdl');
+    game.addAsset('sprites/level/guardDown.png', 'gd');
+    game.addAsset('sprites/level/guardRightDown.png', 'grd');
+    game.addAsset('sprites/level/guardRight.png', 'gr');
+    game.addAsset('sprites/level/guardUpRight.png', 'gur');
+    game.addAsset('sprites/level/guardUp.png', 'gu');
+    game.addAsset('sprites/level/guardLeftUpRight.png', 'glur');
+    game.addAsset('sprites/level/guardLeftRight.png', 'glr');
+    game.addAsset('sprites/level/guardLeftDownRight.png', 'gldr');
+    game.addAsset('sprites/level/guardUpRightDown.png', 'gurd');
+    game.addAsset('sprites/level/guardUpDownLeft.png', 'gudl');
+    game.addAsset('sprites/level/guardUpDown.png', 'gud');
+    game.addAsset('sprites/level/guardDownRight.png', 'gdr');
+    game.addAsset('sprites/level/guardLeftDown.png', 'gld');
+    game.addAsset('sprites/level/guardUpRightDownLeft.png', 'gurdl');
+    game.addAsset('sprites/level/guardLeftUp.png', 'glu');
+    game.addAsset('sprites/level/guardRightUp.png', 'gru');
     
     game.addAsset('sprites/car/redCar_up.png', 'redCar_up');
     game.addAsset('sprites/car/redCar_right.png', 'redCar_right');
