@@ -64,6 +64,13 @@ game.module(
             return ((u >= 0) && (v >= 0));
         },
         
+        isCloseEnoughToTile: function(tileData) {
+            
+            return Math.distance(
+                    tileData.position.x, tileData.position.y,
+                    this.sprite.position.x, this.sprite.position.y) < (Map.TILE_HALF_WIDTH / 2.0);
+        },
+        
         initializePhysics: function(settings) {
             
             this.body = new game.Body({

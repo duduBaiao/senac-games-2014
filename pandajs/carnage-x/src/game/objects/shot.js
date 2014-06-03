@@ -37,6 +37,32 @@ game.module(
             this.playShotSoundEffect();
         },
         
+        hitSomething: function(position) {
+            
+            var explosionPosition;
+            var diffVector;
+            
+            if (position) {
+                explosionPosition = position;
+                
+                diffVector = new game.Vector();
+            }
+            else {
+                explosionPosition = this.sprite.position;
+                
+                diffVector = this.angleToVector(this.body.rotation);
+                
+                var anchorDiff = this.sprite.anchor.y * this.sprite.height;
+                
+                diffVector.multiply(anchorDiff,
+                                    anchorDiff);
+            }
+            
+            var explosion = new Explosion({name: 'shotHitCar',
+                                           x: explosionPosition.x + diffVector.x,
+                                           y: explosionPosition.y + diffVector.y});
+        },
+        
         update: function() {
             
             var displacement = Shot.VELOCITY * game.scale * game.system.delta;
@@ -46,10 +72,18 @@ game.module(
             var newPosition = new PIXI.Point(this.sprite.position.x + (displacement * directionVector.x),
                                              this.sprite.position.y + (displacement * directionVector.y));
             
-            if ((newPosition.x < Map.TILE_HALF_WIDTH) ||
-                (newPosition.y < Map.TILE_HALF_WIDTH) ||
-                (newPosition.x >= (game.scene.map.dimensions.width - Map.TILE_HALF_WIDTH)) ||
-                (newPosition.y >= (game.scene.map.dimensions.height - Map.TILE_HALF_WIDTH))) {
+            var tileData = game.scene.map.tileForPosition(this.sprite.position);
+            
+            if (tileData.collideWithShot && this.isCloseEnoughToTile(tileData)) {
+                
+                this.hitSomething(tileData.position);
+                
+                this.removeFromScene();
+            }
+            else if ((newPosition.x < Map.TILE_HALF_WIDTH) ||
+                     (newPosition.y < Map.TILE_HALF_WIDTH) ||
+                     (newPosition.x >= (game.scene.map.dimensions.width - Map.TILE_HALF_WIDTH)) ||
+                     (newPosition.y >= (game.scene.map.dimensions.height - Map.TILE_HALF_WIDTH))) {
                 
                 this.hitSomething();
                 
@@ -61,20 +95,6 @@ game.module(
             }
             
             this.updateBody();
-        },
-        
-        hitSomething: function() {
-            
-            var diffVector = this.angleToVector(this.body.rotation);
-            
-            var anchorDiff = this.sprite.anchor.y * this.sprite.height;
-            
-            diffVector.multiply(anchorDiff,
-                                anchorDiff);
-            
-            var explosion = new Explosion({name: 'shotHitCar',
-                                           x: this.sprite.position.x + diffVector.x,
-                                           y: this.sprite.position.y + diffVector.y});
         },
         
         afterCollide: function(other) {

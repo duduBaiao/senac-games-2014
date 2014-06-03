@@ -7,6 +7,8 @@ game.module(
         
         init: function(code, y, x, position) {
             
+            this.collideWithShot = (TileData.TYPES.SHOT_COLLIDE.indexOf(code[0]) >= 0);
+            
             this.x = x;
             this.y = y;
             
@@ -33,6 +35,8 @@ game.module(
             },
             
             TYPES: {
+                SHOT_COLLIDE: 'g',
+                
                 'rul': ['right', 'down'],
                 'rur': ['down', 'left'],
                 'rrd': ['up', 'left'],

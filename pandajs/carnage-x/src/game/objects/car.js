@@ -81,13 +81,6 @@ game.module(
             this.isRotating = false;
         },
         
-        isCloseEnoughToTile: function(tileData) {
-            
-            return Math.distance(
-                    tileData.position.x, tileData.position.y,
-                    this.sprite.position.x, this.sprite.position.y) < (Map.TILE_HALF_WIDTH / 2.0);
-        },
-        
         chooseNextDirection: function(tileData) {
             
             var newDirection = null;
