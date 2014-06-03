@@ -9,18 +9,18 @@ game.module(
                 name: "Level 1",
                 data:
                     [
-                        ['gul', 'gu',  'gu',  'gu',  'gu',  'gu',   'gu',  'gu',  'gu',  'gu',  'gu',   'gu',   'gu',   'gu',   'gu',   'gu',    'gur'],
-                        ['gl',  'rul', 'rh',  'rh',  'rur', 'gurdl','rul', 'rh',  'rh',  'rtd', 'rh',   'rh',   'rtd',  'rh',   'rh',   'rur',   'gr'],
-                        ['gl',  'rv',  'gul', 'gur', 'rdl', 'rtd',  'rrd', 'gul', 'gur', 'rv',  'gudl', 'gurd', 'rv',   'gul',  'gur',  'rv',    'gr'],
-                        ['gl',  'rv',  'gl',  'gru', 'gur', 'rv',   'gul', 'glu', 'gr',  'rdl', 'rh',   'rtd',  'rrd',  'gl',   'gr',   'rv',    'gr'],
-                        ['gl',  'rv',  'gl',  'w',   'gr',  'rv',   'gdl', 'gd',  'grd', 'rul', 'rh',   'rtl',  'gul',  'glu',  'gr',   'rv',    'gr'],
-                        ['gl',  'rv',  'gdl', 'gd',  'grd', 'rtr',  'rh',  'rh',  'rh',  'rtl', 'glur', 'rv',   'gdl',  'gd',   'grd',  'rv',    'gr'],
-                        ['gl',  'rtr', 'rh',  'rh',  'rh',  'rtl',  'gul', 'gu',  'gur', 'rv',  'glr',  'rtr',  'rh',   'rh',   'rtd',  'rrd',   'gr'],
-                        ['gl',  'rv',  'gul', 'gu',  'gur', 'rv',   'gdl', 'gld', 'gr',  'rv',  'gldr', 'rv',   'gudl', 'gurd', 'rv',   'gurdl', 'gr'],
-                        ['gl',  'rv',  'gl',  'gdr', 'grd', 'rtr',  'rur', 'gl',  'gr',  'rtr', 'rh',   'rc',   'rh',   'rh',   'rtu',  'rur',   'gr'],
-                        ['gl',  'rv',  'gdl', 'grd', 'rul', 'rrd',  'rv',  'gdl', 'grd', 'rv',  'glur', 'rv',   'gudl', 'gud',  'gurd', 'rv',    'gr'],
-                        ['gl',  'rdl', 'rh',  'rh',  'rrd', 'gurdl','rdl', 'rh',  'rh',  'rrd', 'gldr', 'rdl',  'rh',   'rh',   'rh',   'rrd',   'gr'],
-                        ['gdl', 'gd',  'gd',  'gd',  'gd',  'gd',   'gd',  'gd',  'gd',  'gd',  'gd',   'gd',   'gd',   'gd',   'gd',   'gd',    'grd']
+                        ['gNWc', 'gN',  'gN',  'gN',   'gN',  'gN',   'gN',  'gN',   'gN',  'gN',  'gN',  'gN',  'gN',  'gN',   'gN',   'gN',   'gNEc'],
+                        ['gE',   'rul', 'rh',  'rh',   'rur', 'gBX',  'rul', 'rh',   'rh',  'rtd', 'rh',  'rh',  'rtd', 'rh',   'rh',   'rur',  'gW'],
+                        ['gE',   'rv',  'gSE', 'gSW',  'rdl', 'rtd',  'rrd', 'gSE',  'gSW', 'rv',  'gHW', 'gHE', 'rv',  'gSE',  'gSW',  'rv',   'gW'],
+                        ['gE',   'rv',  'gW',  'gSWc', 'gSW', 'rv',   'gSE', 'gSEc', 'gE',  'rdl', 'rh',  'rtd', 'rrd', 'gW',   'gE',   'rv',   'gW'],
+                        ['gE',   'rv',  'gW',  'w',    'gE',  'rv',   'gNE', 'gN',   'gNW', 'rul', 'rh',  'rtl', 'gSE', 'gSEc', 'gE',   'rv',   'gW'],
+                        ['gE',   'rv',  'gNE', 'gN',   'gNW', 'rtr',  'rh',  'rh',   'rh',  'rtl', 'gVN', 'rv',  'gNE', 'gN',   'gNW',  'rv',   'gW'],
+                        ['gE',   'rtr', 'rh',  'rh',   'rh',  'rtl',  'gSE', 'gS',   'gSW', 'rv',  'gV',  'rtr', 'rh',  'rh',   'rtd',  'rrd',  'gW'],
+                        ['gE',   'rv',  'gSE', 'gS',   'gSW', 'rv',   'gNE', 'gNEc', 'gE',  'rv',  'gVS', 'rv',  'gHW', 'gHE',  'rv',   'gBX',  'gW'],
+                        ['gE',   'rv',  'gW',  'gNWc', 'gNW', 'rtr',  'rur', 'gW',   'gE',  'rtr', 'rh',  'rc',  'rh',  'rh',   'rtu',  'rur',  'gW'],
+                        ['gE',   'rv',  'gNE', 'gNW', 'rul',  'rrd',  'rv',  'gNE',  'gNW', 'rv',  'gVN', 'rv',  'gHW', 'gH',   'gHE',  'rv',   'gW'],
+                        ['gE',   'rdl', 'rh',  'rh',  'rrd',  'gBX',  'rdl', 'rh',   'rh',  'rrd', 'gVS', 'rdl', 'rh',  'rh',   'rh',   'rrd',  'gW'],
+                        ['gSWc', 'gS',  'gS',  'gS',  'gS',   'gS',   'gS',  'gS',   'gS',  'gS',  'gS',  'gS',  'gS',  'gS',   'gS',   'gS',   'gSEc']
                     ],
                 spawnAt: {
                     player: {x: 9, y: 6, direction: 'up'},

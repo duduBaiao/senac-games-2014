@@ -95,11 +95,11 @@ game.module(
             return this.vectorsIntersect(vectorA, startPointA, vectorB, startPointB);
         },
         
-        isCloseEnoughToTile: function(tileData) {
+        isCloseEnoughToTile: function(tileData, factor) {
             
             return Math.distance(
                     tileData.position.x, tileData.position.y,
-                    this.sprite.position.x, this.sprite.position.y) < (Map.TILE_HALF_WIDTH / 2.0);
+                    this.sprite.position.x, this.sprite.position.y) < (Map.TILE_WIDTH * (factor || 0.25));
         },
         
         initializePhysics: function(settings) {

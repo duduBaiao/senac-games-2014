@@ -74,9 +74,15 @@ game.module(
             
             var tileData = game.scene.map.tileForPosition(this.sprite.position);
             
-            if (tileData.collideWithShot && this.isCloseEnoughToTile(tileData)) {
+            if (tileData.collideWithShot && this.isCloseEnoughToTile(tileData, 0.85)) {
                 
-                this.hitSomething(tileData.position);
+                var inverseVector = directionVector.clone().multiply(-1, -1);
+                
+                var explosionPosition =
+                    new PIXI.Point(tileData.position.x + (Map.TILE_HALF_WIDTH * 0.5 * inverseVector.x),
+                                   tileData.position.y + (Map.TILE_HALF_WIDTH * 0.85 * inverseVector.y));
+                
+                this.hitSomething(explosionPosition);
                 
                 this.removeFromScene();
             }
