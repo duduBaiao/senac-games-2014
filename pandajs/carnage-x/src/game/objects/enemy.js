@@ -19,6 +19,25 @@ game.module(
             this.body.collide = this.handleCollision.bind(this);
         },
         
+        chooseNextDirection: function(tileData) {
+            
+            if (!this.lastTileData || (this.lastTileData != tileData)) {
+                
+                var newDirectionIndex = Math.floor(Math.random() * tileData.allowedDirections.length);
+                
+                var newDirection = tileData.allowedDirections[newDirectionIndex];
+                
+                if (!this.areOppositeDirections(this.direction, newDirection)) {
+                    
+                    this.requestedDirection = newDirection;
+                }
+                
+                this.lastTileData = tileData;
+                
+                this._super(tileData);
+            }
+        },
+        
         afterCollide: function() {
             // console.log('afterCollide!');
         },

@@ -23,9 +23,9 @@ game.module(
                         ['gSWc', 'gS',  'gS',  'gS',  'gS',   'gS',   'gS',  'gS',   'gS',  'gS',  'gS',  'gS',  'gS',  'gS',   'gS',   'gS',   'gSEc']
                     ],
                 spawnAt: {
-                    player: {x: 9, y: 6, direction: 'up'},
-                    enemies: [{x: 1, y: 1, direction: 'right'},
-                              {x: 15, y: 10, direction: 'up'}]
+                    player: {x: 9, y: 10, direction: 'up'},
+                    enemies: [{x: 1, y: 10, direction: 'up'},
+                              {x: 15, y: 1, direction: 'down'}]
                 }
             }
         ];

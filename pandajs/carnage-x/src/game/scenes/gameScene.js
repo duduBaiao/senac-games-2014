@@ -7,10 +7,11 @@ game.module(
     'game.objects.map',
     'game.objects.player',
     'game.objects.enemy',
-    'game.screens.pauseScreen',
-    'game.utils',
     'game.objects.shot',
-    'game.objects.explosion'
+    'game.objects.explosion',
+    'game.objects.bar',
+    'game.screens.pauseScreen',
+    'game.utils'
 )
 .body(function() {
     
@@ -24,7 +25,13 @@ game.module(
         
         inputEnabled: true,
         
+        shotPower: 100,
+        
+        shotRecharging: false,
+        
         init: function() {
+            
+            this.startAudio();
             
             this.initializePhysics();
             
@@ -32,11 +39,11 @@ game.module(
             
             this.spawnPlayer();
             
-            this.spawnEnemies();
-            
             this.initializeCamera();
             
-            this.startAudio();
+            this.spawnEnemies();
+            
+            this.initializeHUD();
         },
         
         initializePhysics: function() {
@@ -69,6 +76,13 @@ game.module(
             }, this);
         },
         
+        initializeHUD: function() {
+            
+            this.shotBar = new Bar();
+            
+            this.shotBar.addToScene();
+        },
+        
         initializeCamera: function() {
             
             this.cameraTarget =
@@ -78,11 +92,11 @@ game.module(
                     {anchor: {x: 0.5, y: 0.5},
                      width: 60,
                      height: 60});
-                     
-            //this.map.container.addChild(this.cameraTarget);
             
-            this.camera = new game.Camera(this.player.sprite.position.x,
-                                          this.player.sprite.position.y);
+            this.updateCameraTarget();
+            
+            this.camera = new game.Camera(this.cameraTarget.position.x,
+                                          this.cameraTarget.position.y);
             
             this.camera.target = this.cameraTarget;
             
@@ -143,13 +157,29 @@ game.module(
         
         fire: function() {
             
+            if (this.shotRecharging) return;
+            
+            this.shotRecharging = true;
+            
             var shot = new Shot({x: this.player.sprite.position.x,
                                  y: this.player.sprite.position.y,
                                  direction: this.player.direction});
+            var fireTween =
+                new game.Tween(this)
+                    .to({shotPower: 0}, 500);
+            
+            var rechargeTween =
+                new game.Tween(this)
+                    .delay(400)
+                    .to({shotPower: 100}, 6000)
+                    .onComplete((function() { this.shotRecharging = false; }).bind(this));
+            
+            fireTween.chain(rechargeTween);
+            
+            fireTween.start();
         },
         
-        update: function() {
-            this.processInputs();
+        updateCameraTarget: function() {
             
             var diffVector = this.player.angleToVector(this.player.sprite.rotation);
             
@@ -159,8 +189,16 @@ game.module(
             
             this.cameraTarget.position.x = this.player.sprite.position.x + diffVector.x;
             this.cameraTarget.position.y = this.player.sprite.position.y + diffVector.y;
+        },
+        
+        update: function() {
+            
+            this.processInputs();
+            
+            this.updateCameraTarget();
             
             if (this.player.isRotating) {
+                
                 this.camera.acceleration = GameScene.CAMERA_ACCELERATION_MIN;
             }
             else {
@@ -171,6 +209,13 @@ game.module(
             }
             
             this._super();
+            
+            if (this.lastShotPower != this.shotPower) {
+                
+                this.shotBar.draw(this.shotPower);
+                
+                this.lastShotPower = this.shotPower;
+            }
         },
         
         removeGameObject: function(obj) {
