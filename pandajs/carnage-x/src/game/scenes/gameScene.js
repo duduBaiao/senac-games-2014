@@ -9,7 +9,7 @@ game.module(
     'game.objects.enemy',
     'game.objects.shot',
     'game.objects.explosion',
-    'game.objects.bar',
+    'game.controls.bar',
     'game.screens.pauseScreen',
     'game.utils'
 )
@@ -21,7 +21,7 @@ game.module(
         
         currentMapIndex: 0,
         
-        enemyCount: 0,
+        remainingEnemies: 0,
         
         inputEnabled: true,
         
@@ -58,6 +58,8 @@ game.module(
             }
             
             this.map = new Map(this.currentMapIndex);
+            
+            this.remaingTime = this.map.timeLimit;
         },
         
         spawnPlayer: function() {
@@ -71,16 +73,16 @@ game.module(
                 
                 var enemy = new Enemy({spawnAt: spawnAt});
                 
-                this.enemyCount++;
+                this.remainingEnemies++;
                 
             }, this);
         },
         
         initializeHUD: function() {
             
-            this.shotBar = new Bar();
+            this.timeBar = new Bar({y: 32, foregroundColor: 0x66CCFF, backgroundColor: 0x4084AA});
             
-            this.shotBar.addToScene();
+            this.shotBar = new Bar({y: 64});
         },
         
         initializeCamera: function() {
@@ -101,10 +103,14 @@ game.module(
             this.camera.target = this.cameraTarget;
             
             this.camera.container = this.map.container;
-            this.camera.limit = new game.Point(this.map.dimensions.width, this.map.dimensions.height);
             
-            this.camera.sensor.width = this.player.sprite.height;
-            this.camera.sensor.height = this.player.sprite.height;
+            this.camera.minX = 0;
+            this.camera.minY = 0;
+            this.camera.maxX = this.map.dimensions.width - game.system.width;
+            this.camera.maxY = this.map.dimensions.height - game.system.height;
+            
+            this.camera.sensorWidth = this.player.sprite.height;
+            this.camera.sensorHeight = this.player.sprite.height;
             
             this.camera.acceleration = GameScene.CAMERA_ACCELERATION_MIN;
         },
@@ -133,6 +139,9 @@ game.module(
             
             if (key == 'SPACE') {
                 this.fire();
+            }
+            else if (key == 'P') {
+                this.player.stopped = !this.player.stopped;
             }
         },
         
@@ -216,6 +225,16 @@ game.module(
                 
                 this.lastShotPower = this.shotPower;
             }
+            
+            this.remaingTime -= game.system.delta;
+            
+            if (this.remaingTime > 0) {
+                
+                this.timeBar.draw(this.remaingTime / this.map.timeLimit * 100.0);
+            }
+            else {
+                this.endLevel(false);
+            }
         },
         
         removeGameObject: function(obj) {
@@ -230,10 +249,12 @@ game.module(
             obj.removeBody();
             
             if (obj instanceof Enemy) {
-                this.enemyCount--;
                 
-                if (this.enemyCount == 0) {
-                    this.endLevel();
+                this.remainingEnemies--;
+                
+                if (this.remainingEnemies == 0) {
+                    
+                    this.endLevel(true);
                 }
             }
         },
@@ -242,10 +263,17 @@ game.module(
             game.audio.playMusic('fase1Bg', 0.2);
         },
         
-        endLevel: function() {
-            // this.inputEnabled = false;
+        endLevel: function(win) {
             
-            console.log('the level is over!');
+            this.inputEnabled = false;
+            
+            console.log('the level is over! win? ' + win);
+            
+            game.scene.addTimer(600, (function() {
+                
+                game.system.pause();
+                
+            }).bind(this));
         }
     });
     

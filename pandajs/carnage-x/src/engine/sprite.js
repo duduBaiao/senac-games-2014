@@ -83,7 +83,7 @@ game.Sprite = PIXI.Sprite.extend({
     @param {Object} [settings]
 **/
 game.Spine = PIXI.Spine.extend({
-    init: function(id, settings) {
+    init: function(id, settings) {
         this._super(game.assets[id] || id);
         game.merge(this, settings);
     },

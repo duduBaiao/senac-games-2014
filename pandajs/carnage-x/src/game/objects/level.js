@@ -7,6 +7,7 @@ game.module(
         [
             {
                 name: "Level 1",
+                timeLimit: 30, // seconds
                 data:
                     [
                         ['gNWc', 'gN',  'gN',  'gN',   'gN',  'gN',   'gN',  'gN',   'gN',  'gN',  'gN',  'gN',  'gN',  'gN',   'gN',   'gN',   'gNEc'],

@@ -29,7 +29,7 @@ var core = {
         Current engine version.
         @property {String} version
     **/
-    version: '1.5.2',
+    version: '1.6.0',
     /**
         Engine settings.
         @property {Object} config
@@ -40,18 +40,22 @@ var core = {
         @property {Array} coreModules
     **/
     coreModules: [
-        'engine.loader',
-        'engine.timer',
-        'engine.system',
+        'engine.analytics',
         'engine.audio',
-        'engine.renderer',
-        'engine.sprite',
+        'engine.camera',
         'engine.debug',
-        'engine.storage',
-        'engine.tween',
-        'engine.scene',
+        'engine.keyboard',
+        'engine.loader',
+        'engine.particle',
+        'engine.physics',
         'engine.pool',
-        'engine.analytics'
+        'engine.renderer',
+        'engine.scene',
+        'engine.sprite',
+        'engine.storage',
+        'engine.system',
+        'engine.timer',
+        'engine.tween'
     ],
     /**
         Scale factor for Retina and HiRes mode.
@@ -269,6 +273,11 @@ var core = {
         this.loadQueue.push(this.current);
 
         if (this.current.name === 'engine.core') {
+            if (this.config.ignoreModules) {
+                for (var i = this.coreModules.length - 1; i >= 0; i--) {
+                    if (this.config.ignoreModules.indexOf(this.coreModules[i]) !== -1) this.coreModules.splice(i, 1);
+                }
+            }
             this.current.requires = this.coreModules;
             this.body(function() {});
         }
@@ -548,6 +557,7 @@ var core = {
         this.device.iOS6 = (this.device.iOS && /OS 6/i.test(navigator.userAgent));
         this.device.iOS7 = (this.device.iOS && /OS 7/i.test(navigator.userAgent));
         this.device.iOS71 = (this.device.iOS && /OS 7_1/i.test(navigator.userAgent));
+        this.device.iOS8 = (this.device.iOS && /OS 8/i.test(navigator.userAgent));
 
         // Android
         this.device.android = /android/i.test(navigator.userAgent);
@@ -576,7 +586,7 @@ var core = {
 
         this.device.mobile = this.device.iOS || this.device.android || this.device.wp || this.device.wt;
 
-        if (typeof navigator.plugins === 'undefined' || navigator.plugins.length === 0) {
+        if (typeof navigator.plugins === 'undefined' || navigator.plugins.length === 0) {
             try {
                 new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
                 this.device.flash = true;

@@ -99,7 +99,7 @@ game.module(
             
             return Math.distance(
                     tileData.position.x, tileData.position.y,
-                    this.sprite.position.x, this.sprite.position.y) < (Map.TILE_WIDTH * (factor || 0.25));
+                    this.sprite.position.x, this.sprite.position.y) < (Map.TILE_WIDTH * (factor || 0.5));
         },
         
         initializePhysics: function(settings) {
