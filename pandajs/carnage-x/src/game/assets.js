@@ -7,10 +7,6 @@ game.module(
 .body(function() {
     
     // Sprites
-    game.addAsset('sprites/loadingBg.png', 'loadingBg');
-    game.addAsset('sprites/loadingMask.png', 'loadingMask');
-    game.addAsset('sprites/loadingText.png', 'loadingText');
-    
     game.addAsset('sprites/mainScreen.png', 'mainScreen');
     game.addAsset('sprites/btnCredits.png', 'btnCredits');
     game.addAsset('sprites/btnStart.png', 'btnStart');
@@ -35,25 +31,30 @@ game.module(
     game.addAsset('sprites/level/roadTRight.png', 'rtr');
     game.addAsset('sprites/level/roadCross.png', 'rc');
     
-    game.addAsset('sprites/level/guardUpLeft.png', 'gul');
-    game.addAsset('sprites/level/guardLeft.png', 'gl');
-    game.addAsset('sprites/level/guardDownLeft.png', 'gdl');
-    game.addAsset('sprites/level/guardDown.png', 'gd');
-    game.addAsset('sprites/level/guardRightDown.png', 'grd');
-    game.addAsset('sprites/level/guardRight.png', 'gr');
-    game.addAsset('sprites/level/guardUpRight.png', 'gur');
-    game.addAsset('sprites/level/guardUp.png', 'gu');
-    game.addAsset('sprites/level/guardLeftUpRight.png', 'glur');
-    game.addAsset('sprites/level/guardLeftRight.png', 'glr');
-    game.addAsset('sprites/level/guardLeftDownRight.png', 'gldr');
-    game.addAsset('sprites/level/guardUpRightDown.png', 'gurd');
-    game.addAsset('sprites/level/guardUpDownLeft.png', 'gudl');
-    game.addAsset('sprites/level/guardUpDown.png', 'gud');
-    game.addAsset('sprites/level/guardDownRight.png', 'gdr');
-    game.addAsset('sprites/level/guardLeftDown.png', 'gld');
-    game.addAsset('sprites/level/guardUpRightDownLeft.png', 'gurdl');
-    game.addAsset('sprites/level/guardLeftUp.png', 'glu');
-    game.addAsset('sprites/level/guardRightUp.png', 'gru');
+    game.addAsset('sprites/level/guardSouth.png', 'gS');
+    game.addAsset('sprites/level/guardNorth.png', 'gN');
+    game.addAsset('sprites/level/guardWest.png', 'gE');
+    game.addAsset('sprites/level/guardEast.png', 'gW');
+    
+    game.addAsset('sprites/level/guardSouthWestCorner.png', 'gSWc');
+    game.addAsset('sprites/level/guardNorthWestCorner.png', 'gNWc');
+    game.addAsset('sprites/level/guardNorthEastCorner.png', 'gNEc');
+    game.addAsset('sprites/level/guardSouthEastCorner.png', 'gSEc');
+    
+    game.addAsset('sprites/level/guardNorthEast.png', 'gNE');
+    game.addAsset('sprites/level/guardNorthWest.png', 'gNW');
+    game.addAsset('sprites/level/guardSouthEast.png', 'gSE');
+    game.addAsset('sprites/level/guardSouthWest.png', 'gSW');
+    
+    game.addAsset('sprites/level/guardH.png', 'gH');
+    game.addAsset('sprites/level/guardHWest.png', 'gHW');
+    game.addAsset('sprites/level/guardHEast.png', 'gHE');
+    
+    game.addAsset('sprites/level/guardV.png', 'gV');
+    game.addAsset('sprites/level/guardVSouth.png', 'gVS');
+    game.addAsset('sprites/level/guardVNorth.png', 'gVN');
+    
+    game.addAsset('sprites/level/guardBox.png', 'gBX');
     
     game.addAsset('sprites/car/redCar_up.png', 'redCar_up');
     game.addAsset('sprites/car/redCar_right.png', 'redCar_right');

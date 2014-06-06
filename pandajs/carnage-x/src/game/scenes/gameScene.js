@@ -7,10 +7,11 @@ game.module(
     'game.objects.map',
     'game.objects.player',
     'game.objects.enemy',
-    'game.screens.pauseScreen',
-    'game.utils',
     'game.objects.shot',
-    'game.objects.explosion'
+    'game.objects.explosion',
+    'game.controls.bar',
+    'game.screens.pauseScreen',
+    'game.utils'
 )
 .body(function() {
     
@@ -20,11 +21,17 @@ game.module(
         
         currentMapIndex: 0,
         
-        enemyCount: 0,
+        remainingEnemies: 0,
         
         inputEnabled: true,
         
+        shotPower: 100,
+        
+        shotRecharging: false,
+        
         init: function() {
+            
+            this.startAudio();
             
             this.initializePhysics();
             
@@ -32,11 +39,11 @@ game.module(
             
             this.spawnPlayer();
             
-            this.spawnEnemies();
-            
             this.initializeCamera();
             
-            this.startAudio();
+            this.spawnEnemies();
+            
+            this.initializeHUD();
         },
         
         initializePhysics: function() {
@@ -51,6 +58,8 @@ game.module(
             }
             
             this.map = new Map(this.currentMapIndex);
+            
+            this.remaingTime = this.map.timeLimit;
         },
         
         spawnPlayer: function() {
@@ -64,9 +73,16 @@ game.module(
                 
                 var enemy = new Enemy({spawnAt: spawnAt});
                 
-                this.enemyCount++;
+                this.remainingEnemies++;
                 
             }, this);
+        },
+        
+        initializeHUD: function() {
+            
+            this.timeBar = new Bar({y: 32, foregroundColor: 0x66CCFF, backgroundColor: 0x4084AA});
+            
+            this.shotBar = new Bar({y: 64});
         },
         
         initializeCamera: function() {
@@ -78,19 +94,23 @@ game.module(
                     {anchor: {x: 0.5, y: 0.5},
                      width: 60,
                      height: 60});
-                     
-            //this.map.container.addChild(this.cameraTarget);
             
-            this.camera = new game.Camera(this.player.sprite.position.x,
-                                          this.player.sprite.position.y);
+            this.updateCameraTarget();
+            
+            this.camera = new game.Camera(this.cameraTarget.position.x,
+                                          this.cameraTarget.position.y);
             
             this.camera.target = this.cameraTarget;
             
             this.camera.container = this.map.container;
-            this.camera.limit = new game.Point(this.map.dimensions.width, this.map.dimensions.height);
             
-            this.camera.sensor.width = this.player.sprite.height;
-            this.camera.sensor.height = this.player.sprite.height;
+            this.camera.minX = 0;
+            this.camera.minY = 0;
+            this.camera.maxX = this.map.dimensions.width - game.system.width;
+            this.camera.maxY = this.map.dimensions.height - game.system.height;
+            
+            this.camera.sensorWidth = this.player.sprite.height;
+            this.camera.sensorHeight = this.player.sprite.height;
             
             this.camera.acceleration = GameScene.CAMERA_ACCELERATION_MIN;
         },
@@ -120,6 +140,9 @@ game.module(
             if (key == 'SPACE') {
                 this.fire();
             }
+            else if (key == 'P') {
+                this.player.stopped = !this.player.stopped;
+            }
         },
         
         click: function(event) {
@@ -143,13 +166,29 @@ game.module(
         
         fire: function() {
             
+            if (this.shotRecharging) return;
+            
+            this.shotRecharging = true;
+            
             var shot = new Shot({x: this.player.sprite.position.x,
                                  y: this.player.sprite.position.y,
                                  direction: this.player.direction});
+            var fireTween =
+                new game.Tween(this)
+                    .to({shotPower: 0}, 500);
+            
+            var rechargeTween =
+                new game.Tween(this)
+                    .delay(400)
+                    .to({shotPower: 100}, 6000)
+                    .onComplete((function() { this.shotRecharging = false; }).bind(this));
+            
+            fireTween.chain(rechargeTween);
+            
+            fireTween.start();
         },
         
-        update: function() {
-            this.processInputs();
+        updateCameraTarget: function() {
             
             var diffVector = this.player.angleToVector(this.player.sprite.rotation);
             
@@ -159,8 +198,16 @@ game.module(
             
             this.cameraTarget.position.x = this.player.sprite.position.x + diffVector.x;
             this.cameraTarget.position.y = this.player.sprite.position.y + diffVector.y;
+        },
+        
+        update: function() {
+            
+            this.processInputs();
+            
+            this.updateCameraTarget();
             
             if (this.player.isRotating) {
+                
                 this.camera.acceleration = GameScene.CAMERA_ACCELERATION_MIN;
             }
             else {
@@ -171,6 +218,23 @@ game.module(
             }
             
             this._super();
+            
+            if (this.lastShotPower != this.shotPower) {
+                
+                this.shotBar.draw(this.shotPower);
+                
+                this.lastShotPower = this.shotPower;
+            }
+            
+            this.remaingTime -= game.system.delta;
+            
+            if (this.remaingTime > 0) {
+                
+                this.timeBar.draw(this.remaingTime / this.map.timeLimit * 100.0);
+            }
+            else {
+                this.endLevel(false);
+            }
         },
         
         removeGameObject: function(obj) {
@@ -185,10 +249,12 @@ game.module(
             obj.removeBody();
             
             if (obj instanceof Enemy) {
-                this.enemyCount--;
                 
-                if (this.enemyCount == 0) {
-                    this.endLevel();
+                this.remainingEnemies--;
+                
+                if (this.remainingEnemies == 0) {
+                    
+                    this.endLevel(true);
                 }
             }
         },
@@ -197,10 +263,17 @@ game.module(
             game.audio.playMusic('fase1Bg', 0.2);
         },
         
-        endLevel: function() {
-            // this.inputEnabled = false;
+        endLevel: function(win) {
             
-            console.log('the level is over!');
+            this.inputEnabled = false;
+            
+            console.log('the level is over! win? ' + win);
+            
+            game.scene.addTimer(600, (function() {
+                
+                game.system.pause();
+                
+            }).bind(this));
         }
     });
     

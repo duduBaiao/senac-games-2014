@@ -24,20 +24,38 @@ game.Storage = game.Class.extend({
         Set value to local storage.
         @method set
         @param {String} key
-        @param {String|Object} value
+        @param {*} value
     **/
     set: function(key, value) {
-        localStorage[this.id + '.' + key] = this.encode(value);
+        localStorage.setItem(this.id + '.' + key, this.encode(value));
     },
 
     /**
         Get key from local storage.
         @method get
         @param {String} key
-        @return {String} value
+        @param {*} [defaultValue]
+        @return {*} value
     **/
-    get: function(key) {
-        return this.decode(localStorage[this.id + '.' + key]);
+    get: function(key, defaultValue) {
+        var raw = localStorage.getItem(this.id + '.' + key);
+        if (raw === null) return defaultValue;
+        try {
+            return this.decode(raw);
+        }
+        catch (err) {
+            return raw;
+        }
+    },
+
+    /**
+        Check if a key is in local storage.
+        @method has
+        @param {String} key
+        @return {Boolean}
+    **/
+    has: function(key) {
+        return localStorage.getItem(this.id + '.' + key) !== null;
     },
 
     /**
@@ -54,20 +72,18 @@ game.Storage = game.Class.extend({
         @method reset
     **/
     reset: function() {
-        for (var i in localStorage) {
-            if (i.indexOf(this.id + '.') !== -1) localStorage.removeItem(i);
+        for (var i = localStorage.length - 1; i >= 0; i--) {
+            var key = localStorage.key(i);
+            if (key.indexOf(this.id + '.') !== -1) localStorage.removeItem(key);
         }
     },
 
-    encode: function(obj) {
-        if (typeof obj === 'object') return JSON.stringify(obj);
-        return obj;
+    encode: function(val) {
+        return JSON.stringify(val);
     },
 
     decode: function(str) {
-        if (typeof str === 'undefined') return;
-        if (str.indexOf('{') === 0) return JSON.parse(str);
-        return str;
+        return JSON.parse(str);
     }
 });
 

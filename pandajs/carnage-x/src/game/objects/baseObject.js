@@ -8,7 +8,7 @@ game.module(
     
     BaseObject = game.Class.extend({
         
-        isOppositeDirections: function(currentDirection, newDirection) {
+        areOppositeDirections: function(currentDirection, newDirection) {
             
             var currentDirectionVector = TileData.DIRECTIONS_VECTORS[currentDirection];
             var newDirectionVector = TileData.DIRECTIONS_VECTORS[newDirection];
@@ -18,7 +18,7 @@ game.module(
             return (dotProduct == -1);
         },
         
-        isPerpendicularDirections: function(currentDirection, newDirection) {
+        arePerpendicularDirections: function(currentDirection, newDirection) {
             
             var currentDirectionVector = TileData.DIRECTIONS_VECTORS[currentDirection];
             var newDirectionVector = TileData.DIRECTIONS_VECTORS[newDirection];
@@ -28,7 +28,22 @@ game.module(
             return (dotProduct == 0);
         },
         
-        isSameDirections: function(currentDirection, newDirection) {
+        areSameVectorDirections: function(currentDirectionVector, newDirectionVector) {
+            
+            var dotProduct = currentDirectionVector.dot(newDirectionVector);
+            
+            return (dotProduct == 1);
+        },
+        
+        areSameAngleDirections: function(currentRotation, newRotation) {
+            
+            var currentDirectionVector = this.angleToVector(currentRotation).normalize();
+            var newDirectionVector = this.angleToVector(newRotation).normalize();
+            
+            return this.areSameVectorDirections(currentDirectionVector, newDirectionVector);
+        },
+        
+        areSameDirections: function(currentDirection, newDirection) {
             
             var currentDirectionVector = TileData.DIRECTIONS_VECTORS[currentDirection];
             var newDirectionVector = TileData.DIRECTIONS_VECTORS[newDirection];
@@ -38,13 +53,13 @@ game.module(
             return (dotProduct == 1);
         },
         
-        directionsIntersect: function(directionA, startPointA, directionB, startPointB) {
+        vectorsIntersect: function(vectorA, startPointA, vectorB, startPointB) {
             
             var as = startPointA;
             var bs = startPointB;
             
-            var ad = TileData.DIRECTIONS_VECTORS[directionA].clone().multiply(Map.TILE_WIDTH, Map.TILE_WIDTH);
-            var bd = TileData.DIRECTIONS_VECTORS[directionB].clone().multiply(Map.TILE_WIDTH, Map.TILE_WIDTH);
+            var ad = vectorA;
+            var bd = vectorB;
             
             /*
             Given: two rays a, b with starting points (origin vectors) as, bs, and direction vectors ad, bd.
@@ -64,11 +79,27 @@ game.module(
             return ((u >= 0) && (v >= 0));
         },
         
-        isCloseEnoughToTile: function(tileData) {
+        directionsIntersect: function(directionA, startPointA, directionB, startPointB) {
+            
+            var vectorA = TileData.DIRECTIONS_VECTORS[directionA].clone().multiply(Map.TILE_WIDTH, Map.TILE_WIDTH);
+            var vectorB = TileData.DIRECTIONS_VECTORS[directionB].clone().multiply(Map.TILE_WIDTH, Map.TILE_WIDTH);
+            
+            return this.vectorsIntersect(vectorA, startPointA, vectorB, startPointB);
+        },
+        
+        angleVectorsIntersect: function(rotationA, startPointA, rotationB, startPointB) {
+            
+            var vectorA = this.angleToVector(rotationA).normalize().multiply(Map.TILE_WIDTH, Map.TILE_WIDTH);
+            var vectorB = this.angleToVector(rotationB).normalize().multiply(Map.TILE_WIDTH, Map.TILE_WIDTH);
+            
+            return this.vectorsIntersect(vectorA, startPointA, vectorB, startPointB);
+        },
+        
+        isCloseEnoughToTile: function(tileData, factor) {
             
             return Math.distance(
                     tileData.position.x, tileData.position.y,
-                    this.sprite.position.x, this.sprite.position.y) < (Map.TILE_HALF_WIDTH / 2.0);
+                    this.sprite.position.x, this.sprite.position.y) < (Map.TILE_WIDTH * (factor || 0.25));
         },
         
         initializePhysics: function(settings) {
@@ -151,23 +182,30 @@ game.module(
             
             this.stopped = true;
             
-            game.scene.addTimer(miliseconds, (function() {
-                
-                this.stopped = false;
-                
-            }).bind(this));
+            if (this.stopTimer) {
+                game.scene.removeTimer(this.stopTimer);
+            }
+            
+            this.stopTimer =
+                game.scene.addTimer(miliseconds, (function() {
+                    
+                    console.log('object started again!');
+                    
+                    this.stopped = false;
+                    
+                }).bind(this));
         },
         
         disaccelerate: function() {
             
-            this.acceleration *= 0.05;
+            this.acceleration *= 0.06;
         },
         
         stopAWhile: function() {
             
             this.disaccelerate();
             
-            this.stopByDuration(100);
+            this.stopByDuration(100 * Car.VELOCITY_REFERENCE / Car.VELOCITY);
         },
         
         addToScene: function() {

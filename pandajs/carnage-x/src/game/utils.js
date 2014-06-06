@@ -19,6 +19,34 @@ game.module(
             lerp: function(a, b, x) {
                 return a + x * (b - a);
             }
+        },
+        
+        Sprite: {
+            sizeToFit: function(sprite, width, height) {
+                
+                var screenWidthScale = (game.system.width * 1.0 / game.system.height * 1.0);
+                
+                var spriteWidthScale = (width * 1.0 / height * 1.0);
+                
+                if (spriteWidthScale > screenWidthScale) {
+                    
+                    sprite.height = game.system.height;
+                    sprite.width = sprite.height * spriteWidthScale;
+                }
+                else {
+                    
+                    var spriteHeightScale = (height * 1.0 / width * 1.0);
+                    
+                    sprite.width = game.system.width;
+                    sprite.height = sprite.width * spriteHeightScale;
+                }
+                
+                sprite.anchor.x = 0.5;
+                sprite.anchor.y = 0.5;
+                
+                sprite.position.x = game.system.width / 2.0;
+                sprite.position.y = game.system.height / 2.0;
+            }
         }
     };
 });
