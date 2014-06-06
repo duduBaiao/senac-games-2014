@@ -7,10 +7,6 @@ game.module(
 .body(function() {
     
     // Sprites
-    game.addAsset('sprites/loadingBg.png', 'loadingBg');
-    game.addAsset('sprites/loadingMask.png', 'loadingMask');
-    game.addAsset('sprites/loadingText.png', 'loadingText');
-    
     game.addAsset('sprites/mainScreen.png', 'mainScreen');
     game.addAsset('sprites/btnCredits.png', 'btnCredits');
     game.addAsset('sprites/btnStart.png', 'btnStart');
