@@ -11,7 +11,9 @@ game.module(
     'game.objects.explosion',
     'game.controls.bar',
     'game.screens.pauseScreen',
-    'game.utils'
+    'game.utils',
+    'game.gameState',
+    'game.screens.endLevelScreen'
 )
 .body(function() {
     
@@ -19,11 +21,9 @@ game.module(
         
         backgroundColor: 0xffffff,
         
-        currentMapIndex: 0,
-        
         remainingEnemies: 0,
         
-        inputEnabled: true,
+        stopped: false,
         
         shotPower: 100,
         
@@ -44,6 +44,16 @@ game.module(
             this.spawnEnemies();
             
             this.initializeHUD();
+            
+            game.scene.addTimer(2000, (function() {
+                
+                this.endLevel(false);
+                
+            }).bind(this));
+        },
+        
+        startAudio: function(){
+            game.audio.playMusic('fase1Bg', 0.2);
         },
         
         initializePhysics: function() {
@@ -57,7 +67,7 @@ game.module(
                 this.map.remove();
             }
             
-            this.map = new Map(this.currentMapIndex);
+            this.map = new Map(GameState.Level.currentMapIndex);
             
             this.remaingTime = this.map.timeLimit;
         },
@@ -117,7 +127,7 @@ game.module(
         
         processInputs: function() {
             
-            if (!this.inputEnabled) return;
+            if (this.stopped) return;
             
             if (game.keyboard.down('UP')) {
                 this.player.requestedDirection = 'up';
@@ -135,7 +145,7 @@ game.module(
         
         keydown: function(key) {
             
-            if (!this.inputEnabled) return;
+            if (this.stopped) return;
             
             if (key == 'SPACE') {
                 this.fire();
@@ -147,7 +157,7 @@ game.module(
         
         click: function(event) {
             
-            if (!this.inputEnabled) return;
+            if (this.stopped) return;
             
             if (Math.distance(
                     event.global.x, event.global.y,
@@ -159,7 +169,7 @@ game.module(
         
         swipe: function(dir) {
             
-            if (!this.inputEnabled) return;
+            if (this.stopped) return;
             
             this.player.requestedDirection = dir;
         },
@@ -201,6 +211,8 @@ game.module(
         },
         
         update: function() {
+            
+            if (this.stopped) return;
             
             this.processInputs();
             
@@ -259,21 +271,17 @@ game.module(
             }
         },
         
-        startAudio: function(){
-            game.audio.playMusic('fase1Bg', 0.2);
-        },
-        
         endLevel: function(win) {
             
-            this.inputEnabled = false;
+            this.stopped = true;
             
-            console.log('the level is over! win? ' + win);
+            game.audio.stopMusic();
             
-            game.scene.addTimer(600, (function() {
-                
-                game.system.pause();
-                
-            }).bind(this));
+            new EndLevelScreen(true);
+        },
+        
+        reload: function() {
+            
         }
     });
     

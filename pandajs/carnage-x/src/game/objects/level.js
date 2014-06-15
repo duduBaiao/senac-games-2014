@@ -145,7 +145,4 @@ game.module(
                 }
             }
         ];
-    
-    //muda a tela para jogar, que é sempre a primeira da array.
-    //Level[0] = Level[3];
 });

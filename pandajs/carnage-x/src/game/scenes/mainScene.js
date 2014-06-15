@@ -3,7 +3,8 @@ game.module(
 )
 .require(
     'game.scenes.gameScene',
-    'game.controls.button'
+    'game.controls.button',
+    'game.gameState'
 )
 .body(function() {
     
@@ -28,6 +29,9 @@ game.module(
                         game.audio.playSound('btnStartSnd', false, 0.8);
                         
                         game.scene.addTimer(300,function(){
+                            
+                            GameState.Level.currentMapIndex = 0;
+                            
                             game.system.setScene(GameScene);
                         });
                     });

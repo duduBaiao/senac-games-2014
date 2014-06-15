@@ -4,6 +4,7 @@ game.module(
 .body(function(){
     
     Utils = {
+        
         Math: {
             
             /**
