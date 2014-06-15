@@ -44,12 +44,6 @@ game.module(
             this.spawnEnemies();
             
             this.initializeHUD();
-            
-            game.scene.addTimer(2000, (function() {
-                
-                this.endLevel(false);
-                
-            }).bind(this));
         },
         
         startAudio: function(){
