@@ -10,7 +10,7 @@ game.module(
     'game.objects.shot',
     'game.objects.explosion',
     'game.controls.bar',
-    'game.screens.pauseScreen',
+    'game.controls.icon',
     'game.utils',
     'game.gameState',
     'game.screens.endLevelScreen'
@@ -84,9 +84,16 @@ game.module(
         
         initializeHUD: function() {
             
-            this.timeBar = new Bar({y: 32, foregroundColor: 0x66CCFF, backgroundColor: 0x4084AA});
+            this.fuelBar = new Bar({y: 32, foregroundColor: 0x66CCFF, backgroundColor: 0x4084AA});
             
-            this.shotBar = new Bar({y: 64});
+            this.shotBar = new Bar({y: 74});
+            
+            var iconWidth = 32;
+            
+            var iconX = this.fuelBar.x - (iconWidth * 1.3);
+            
+            new Icon('fuel_icon', iconX, this.fuelBar.y - 6, {width: iconWidth, height: iconWidth});
+            new Icon('shot_icon', iconX, this.shotBar.y - 4, {width: iconWidth, height: iconWidth});
         },
         
         initializeCamera: function() {
@@ -184,7 +191,7 @@ game.module(
             var rechargeTween =
                 new game.Tween(this)
                     .delay(400)
-                    .to({shotPower: 100}, 6000)
+                    .to({shotPower: 100}, 4000)
                     .onComplete((function() { this.shotRecharging = false; }).bind(this));
             
             fireTween.chain(rechargeTween);
@@ -236,7 +243,7 @@ game.module(
             
             if (this.remaingTime > 0) {
                 
-                this.timeBar.draw(this.remaingTime / this.map.timeLimit * 100.0);
+                this.fuelBar.draw(this.remaingTime / this.map.timeLimit * 100.0);
             }
             else {
                 this.endLevel(false);
@@ -267,11 +274,15 @@ game.module(
         
         endLevel: function(win) {
             
-            this.stopped = true;
-            
-            game.audio.stopMusic();
-            
-            new EndLevelScreen(true);
+            game.scene.addTimer(500, (function() {
+                
+                this.stopped = true;
+                
+                game.audio.stopMusic();
+                
+                new EndLevelScreen(true);
+                
+            }).bind(this));
         },
         
         reload: function() {

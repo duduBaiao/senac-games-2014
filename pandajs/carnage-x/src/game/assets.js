@@ -81,6 +81,9 @@ game.module(
     game.addAsset('sprites/explosion/carDie6.png', 'carDie6');
     game.addAsset('sprites/explosion/carDie7.png', 'carDie7');
     
+    game.addAsset('sprites/icons/fuel_icon.png', 'fuel_icon');
+    game.addAsset('sprites/icons/shot_icon.png', 'shot_icon');
+    
     game.addAsset('sprites/dummy.png', 'dummy');
     
     // Sounds
