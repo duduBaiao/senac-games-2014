@@ -8,10 +8,15 @@ game.module(
     
     // Sprites
     game.addAsset('sprites/mainScreen.png', 'mainScreen');
+    game.addAsset('sprites/shadow.png', 'shadow');
     game.addAsset('sprites/btnCredits.png', 'btnCredits');
     game.addAsset('sprites/btnStart.png', 'btnStart');
     game.addAsset('sprites/btnHiScore.png', 'btnHiScore');
     game.addAsset('sprites/btnHowToPlay.png', 'btnHowToPlay');
+    
+    game.addAsset('sprites/btnContinue.png', 'btnContinue');
+    game.addAsset('sprites/btnRestart.png', 'btnRestart');
+    game.addAsset('sprites/btnFinish.png', 'btnFinish');
     
     game.addAsset('sprites/pausedTitle.png', 'pauseTitle');
     game.addAsset('sprites/bgPaused.png', 'bgPause');
@@ -75,6 +80,9 @@ game.module(
     game.addAsset('sprites/explosion/carDie5.png', 'carDie5');
     game.addAsset('sprites/explosion/carDie6.png', 'carDie6');
     game.addAsset('sprites/explosion/carDie7.png', 'carDie7');
+    
+    game.addAsset('sprites/icons/fuel_icon.png', 'fuel_icon');
+    game.addAsset('sprites/icons/shot_icon.png', 'shot_icon');
     
     game.addAsset('sprites/dummy.png', 'dummy');
     

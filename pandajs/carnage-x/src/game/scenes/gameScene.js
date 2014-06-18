@@ -10,8 +10,10 @@ game.module(
     'game.objects.shot',
     'game.objects.explosion',
     'game.controls.bar',
-    'game.screens.pauseScreen',
-    'game.utils'
+    'game.controls.icon',
+    'game.utils',
+    'game.gameState',
+    'game.screens.endLevelScreen'
 )
 .body(function() {
     
@@ -19,11 +21,9 @@ game.module(
         
         backgroundColor: 0xffffff,
         
-        currentMapIndex: 0,
-        
         remainingEnemies: 0,
         
-        inputEnabled: true,
+        stopped: false,
         
         shotPower: 100,
         
@@ -46,6 +46,10 @@ game.module(
             this.initializeHUD();
         },
         
+        startAudio: function(){
+            game.audio.playMusic('fase1Bg', 0.2);
+        },
+        
         initializePhysics: function() {
             
             this.world = new game.World(0, 0); // no gravity!
@@ -57,7 +61,7 @@ game.module(
                 this.map.remove();
             }
             
-            this.map = new Map(this.currentMapIndex);
+            this.map = new Map(GameState.Level.currentMapIndex);
             
             this.remaingTime = this.map.timeLimit;
         },
@@ -80,9 +84,16 @@ game.module(
         
         initializeHUD: function() {
             
-            this.timeBar = new Bar({y: 32, foregroundColor: 0x66CCFF, backgroundColor: 0x4084AA});
+            this.fuelBar = new Bar({y: 32, foregroundColor: 0x66CCFF, backgroundColor: 0x4084AA});
             
-            this.shotBar = new Bar({y: 64});
+            this.shotBar = new Bar({y: 74});
+            
+            var iconWidth = 32;
+            
+            var iconX = this.fuelBar.x - (iconWidth * 1.3);
+            
+            new Icon('fuel_icon', iconX, this.fuelBar.y - 6, {width: iconWidth, height: iconWidth});
+            new Icon('shot_icon', iconX, this.shotBar.y - 4, {width: iconWidth, height: iconWidth});
         },
         
         initializeCamera: function() {
@@ -117,7 +128,7 @@ game.module(
         
         processInputs: function() {
             
-            if (!this.inputEnabled) return;
+            if (this.stopped) return;
             
             if (game.keyboard.down('UP')) {
                 this.player.requestedDirection = 'up';
@@ -135,7 +146,7 @@ game.module(
         
         keydown: function(key) {
             
-            if (!this.inputEnabled) return;
+            if (this.stopped) return;
             
             if (key == 'SPACE') {
                 this.fire();
@@ -147,7 +158,7 @@ game.module(
         
         click: function(event) {
             
-            if (!this.inputEnabled) return;
+            if (this.stopped) return;
             
             if (Math.distance(
                     event.global.x, event.global.y,
@@ -159,7 +170,7 @@ game.module(
         
         swipe: function(dir) {
             
-            if (!this.inputEnabled) return;
+            if (this.stopped) return;
             
             this.player.requestedDirection = dir;
         },
@@ -180,7 +191,7 @@ game.module(
             var rechargeTween =
                 new game.Tween(this)
                     .delay(400)
-                    .to({shotPower: 100}, 6000)
+                    .to({shotPower: 100}, 4000)
                     .onComplete((function() { this.shotRecharging = false; }).bind(this));
             
             fireTween.chain(rechargeTween);
@@ -201,6 +212,8 @@ game.module(
         },
         
         update: function() {
+            
+            if (this.stopped) return;
             
             this.processInputs();
             
@@ -230,7 +243,7 @@ game.module(
             
             if (this.remaingTime > 0) {
                 
-                this.timeBar.draw(this.remaingTime / this.map.timeLimit * 100.0);
+                this.fuelBar.draw(this.remaingTime / this.map.timeLimit * 100.0);
             }
             else {
                 this.endLevel(false);
@@ -259,21 +272,21 @@ game.module(
             }
         },
         
-        startAudio: function(){
-            game.audio.playMusic('fase1Bg', 0.2);
-        },
-        
         endLevel: function(win) {
             
-            this.inputEnabled = false;
-            
-            console.log('the level is over! win? ' + win);
-            
-            game.scene.addTimer(600, (function() {
+            game.scene.addTimer(500, (function() {
                 
-                game.system.pause();
+                this.stopped = true;
+                
+                game.audio.stopMusic();
+                
+                new EndLevelScreen(true);
                 
             }).bind(this));
+        },
+        
+        reload: function() {
+            
         }
     });
     

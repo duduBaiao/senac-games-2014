@@ -14,7 +14,7 @@ game.module(
             this.backgroundColor = settings.backgroundColor || 0xDE8501;
             
             this.width = settings.width || 300;
-            this.height = settings.height || 12;
+            this.height = settings.height || 20;
             
             this.x = settings.x || ((game.system.width - this.width) / 2.0);
             this.y = settings.y || 0;

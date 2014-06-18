@@ -5,7 +5,7 @@ game.module(
     
     PauseScreen = game.Class.extend({
         
-        init:function(){
+        init: function() {
             
             this.bgPaused = new game.Sprite('bgPause');
             this.bgPaused.alpha = 0.8;
