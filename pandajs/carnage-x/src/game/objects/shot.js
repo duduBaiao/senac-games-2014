@@ -124,8 +124,8 @@ game.module(
     _.extend(Shot,
         {
            VELOCITY: Car.VELOCITY * 1.75,
-           WIDTH: 22.5,
-           HEIGHT: 91.5,
+           WIDTH: 100,
+           HEIGHT: 100,
            
            DAMAGE: Car.LIFE / 3.0
         });

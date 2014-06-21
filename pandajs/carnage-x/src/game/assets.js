@@ -7,19 +7,32 @@ game.module(
 .body(function() {
     
     // Sprites
-    game.addAsset('sprites/mainScreen.png', 'mainScreen');
-    game.addAsset('sprites/shadow.png', 'shadow');
-    game.addAsset('sprites/btnCredits.png', 'btnCredits');
-    game.addAsset('sprites/btnStart.png', 'btnStart');
-    game.addAsset('sprites/btnHiScore.png', 'btnHiScore');
-    game.addAsset('sprites/btnHowToPlay.png', 'btnHowToPlay');
+    game.addAsset('sprites/loading.jpg', 'loading');
     
-    game.addAsset('sprites/btnContinue.png', 'btnContinue');
-    game.addAsset('sprites/btnRestart.png', 'btnRestart');
-    game.addAsset('sprites/btnFinish.png', 'btnFinish');
+    game.addAsset('sprites/mainScreen/mainScreenMask.png', 'mainScreenMask');
+    game.addAsset('sprites/mainScreen/mainScreenBG.jpg', 'mainScreenBG');
     
-    game.addAsset('sprites/pausedTitle.png', 'pauseTitle');
-    game.addAsset('sprites/bgPaused.png', 'bgPause');
+    game.addAsset('sprites/mainScreen/btnPlayIdle.png', 'btnPlayIdle');
+    game.addAsset('sprites/mainScreen/btnPlayMouseOver.png', 'btnPlayMouseOver');
+    game.addAsset('sprites/mainScreen/btnHowToPlayIdle.png', 'btnHowToPlayIdle');
+    game.addAsset('sprites/mainScreen/btnHowToPlayMouseOver.png', 'btnHowToPlayMouseOver');
+    game.addAsset('sprites/mainScreen/btnHiScoresIdle.png', 'btnHiScoresIdle');
+    game.addAsset('sprites/mainScreen/btnHiScoresMouseOver.png', 'btnHiScoresMouseOver');
+    game.addAsset('sprites/mainScreen/btnCreditsIdle.png', 'btnCreditsIdle');
+    game.addAsset('sprites/mainScreen/btnCreditsMouseOver.png', 'btnCreditsMouseOver');
+
+    game.addAsset('sprites/pauseScreen/shadow.png', 'shadow');
+    game.addAsset('sprites/pauseScreen/btnResumeIdle.png', 'btnResumeIdle');
+    game.addAsset('sprites/pauseScreen/btnResumeMouseOver.png', 'btnResumeMouseOver');
+    game.addAsset('sprites/pauseScreen/btnMainMenuIdle.png', 'btnMainMenuIdle');
+    game.addAsset('sprites/pauseScreen/btnMainMenuMouseOver.png', 'btnMainMenuMouseOver');
+    game.addAsset('sprites/pauseScreen/btnRestartIdle.png', 'btnRestartIdle');
+    game.addAsset('sprites/pauseScreen/btnRestartMouseOver.png', 'btnRestartMouseOver');
+    
+    game.addAsset('sprites/pauseScreen/tltPaused.png', 'tltPaused');
+    game.addAsset('sprites/pauseScreen/tltLevelCleared.png', 'tltLevelCleared');
+    game.addAsset('sprites/pauseScreen/tltTimeOut.png', 'tltTimeOut');
+    game.addAsset('sprites/pauseScreen/bgPaused.png', 'bgPaused');
     
     game.addAsset('sprites/level/sideWalk.png', 'w');
     game.addAsset('sprites/level/grass.png', 'gr');
@@ -71,7 +84,7 @@ game.module(
     game.addAsset('sprites/car/blueCar_down.png', 'blueCar_down');
     game.addAsset('sprites/car/blueCar_left.png', 'blueCar_left');
     
-    game.addAsset('sprites/shot/missile.png', 'shot');
+    game.addAsset('sprites/shot/shot1.png', 'shot');
     
     game.addAsset('sprites/explosion/carDie1.png', 'carDie1');
     game.addAsset('sprites/explosion/carDie2.png', 'carDie2');
@@ -80,16 +93,22 @@ game.module(
     game.addAsset('sprites/explosion/carDie5.png', 'carDie5');
     game.addAsset('sprites/explosion/carDie6.png', 'carDie6');
     game.addAsset('sprites/explosion/carDie7.png', 'carDie7');
+    game.addAsset('sprites/explosion/carDie8.png', 'carDie8');
+    game.addAsset('sprites/explosion/carDie9.png', 'carDie9');
+    game.addAsset('sprites/explosion/carDie10.png', 'carDie10');
+    game.addAsset('sprites/explosion/carDie11.png', 'carDie11');
+    game.addAsset('sprites/explosion/carDie12.png', 'carDie12');
+    game.addAsset('sprites/explosion/carDie13.png', 'carDie13');
     
-    game.addAsset('sprites/icons/fuel_icon.png', 'fuel_icon');
-    game.addAsset('sprites/icons/shot_icon.png', 'shot_icon');
+    game.addAsset('sprites/hud/fuel_icon.png', 'fuel_icon');
+    game.addAsset('sprites/hud/shot_icon.png', 'shot_icon');
     
     game.addAsset('sprites/dummy.png', 'dummy');
     
     // Sounds
-    game.addAudio('sound/menuBg.m4a', 'menuBg');
-    game.addAudio('sound/btnStartSnd.m4a', 'btnStartSnd');
     game.addAudio('sound/overOptionSnd.m4a', 'overOptionSnd');
+    game.addAudio('sound/btnStartSnd.m4a', 'btnStartSnd');
+    game.addAudio('sound/menuBg.m4a', 'menuBg');
     game.addAudio('sound/fase1Bg.m4a', 'fase1Bg');
     game.addAudio('sound/fireBallshotSnd.m4a', 'fireBallshotSnd');
     game.addAudio('sound/explosionSnd.m4a', 'explosionSnd');

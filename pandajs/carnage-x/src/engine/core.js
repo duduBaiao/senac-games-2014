@@ -586,7 +586,7 @@ var core = {
 
         this.device.mobile = this.device.iOS || this.device.android || this.device.wp || this.device.wt;
 
-        if (typeof navigator.plugins === 'undefined' || navigator.plugins.length === 0) {
+        if (typeof navigator.plugins === 'undefined' || navigator.plugins.length === 0) {
             try {
                 new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
                 this.device.flash = true;

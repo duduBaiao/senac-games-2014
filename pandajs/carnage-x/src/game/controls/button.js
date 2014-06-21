@@ -9,19 +9,27 @@ game.module(
     Button = game.Sprite.extend({
         
         scaleUp: function() {
+            this.changeToOverTexture();
             this.scale.y = 1.1;
             this.scale.x = 1.1;
             game.audio.playSound("overOptionSnd", false, 0.8);
         },
         
         scaleNormal: function() {
+            this.changeToIddleTexture();
             this.scale.y = 1.0;
             this.scale.x = 1.0;
         },
         
-        scaleDown: function() {
-            this.scale.y = 0.9;
-            this.scale.x = 0.9;
+        changeToOverTexture: function() {
+            var newTexture = this.texture.baseTexture.imageUrl.replace("Idle","MouseOver");
+            this.setTexture(newTexture);
+            game.audio.playSound("overOptionSnd", false, 0.8);
+        },
+        
+        changeToIddleTexture: function() {
+            var newTexture = this.texture.baseTexture.imageUrl.replace("MouseOver","Idle");
+            this.setTexture(newTexture);
         },
         
         init: function(id, x, y, onClick) {
@@ -31,7 +39,6 @@ game.module(
             this.interactive = true;
             
             this.mouseover = this.scaleUp.bind(this);
-            this.touchstart = this.mousedown = this.scaleDown.bind(this);
             this.mouseout = this.touchend = this.mouseupoutside = this.touchendoutside = this.scaleNormal.bind(this);
             
             this.click = this.tap = onClick;
