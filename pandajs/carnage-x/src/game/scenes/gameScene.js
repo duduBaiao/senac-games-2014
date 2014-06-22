@@ -290,7 +290,7 @@ game.module(
                 
                 game.audio.stopMusic();
                 
-                new EndLevelScreen(true);
+                new EndLevelScreen(win);
                 
             }).bind(this));
         },
