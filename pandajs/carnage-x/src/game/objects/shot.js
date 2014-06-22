@@ -30,7 +30,7 @@ game.module(
             this.sprite.rotation = this.angleForDirection(this.direction);
             
             this.initializePhysics({width: Shot.WIDTH * 0.5,
-                                    collideAgainst: BaseObject.COLLISION_GROUPS.enemies,
+                                    collideAgainst: BaseObject.COLLISION_GROUPS.cars,
                                     collisionGroup: BaseObject.COLLISION_GROUPS.shots});
             
             this.playShotSoundEffect();
@@ -85,10 +85,10 @@ game.module(
                 
                 this.removeFromScene();
             }
-            else if ((newPosition.x < Map.TILE_HALF_WIDTH) ||
-                     (newPosition.y < Map.TILE_HALF_WIDTH) ||
-                     (newPosition.x >= (game.scene.map.dimensions.width - Map.TILE_HALF_WIDTH)) ||
-                     (newPosition.y >= (game.scene.map.dimensions.height - Map.TILE_HALF_WIDTH))) {
+            else if ((newPosition.x < Map.TILE_QUARTER_WIDTH) ||
+                     (newPosition.y < Map.TILE_QUARTER_WIDTH) ||
+                     (newPosition.x >= (game.scene.map.dimensions.width - Map.TILE_QUARTER_WIDTH)) ||
+                     (newPosition.y >= (game.scene.map.dimensions.height - Map.TILE_QUARTER_WIDTH))) {
                 
                 this.hitSomething();
                 
@@ -103,16 +103,20 @@ game.module(
         },
         
         afterCollide: function(other) {
+            
             console.log('Shot.afterCollide! other.collisionGroup: ' + other.collisionGroup);
             
-            other.gameObject.decreaseLife(Shot.DAMAGE);
-            
-            if (other.gameObject) {
+            if (other.gameObject instanceof Enemy) {
                 
-                this.hitSomething();
+                other.gameObject.decreaseLife(Shot.DAMAGE);
+                
+                if (other.gameObject) {
+                    
+                    this.hitSomething();
+                }
+                
+                this.removeFromScene();
             }
-            
-            this.removeFromScene();
         },
         
         playShotSoundEffect: function() {

@@ -12,8 +12,8 @@ game.module(
             
             this._super({imageName: 'blueCar',
                          spawnAt: settings.spawnAt,
-                         collideAgainst: BaseObject.COLLISION_GROUPS.player,
-                         collisionGroup: BaseObject.COLLISION_GROUPS.enemies,
+                         collideAgainst: BaseObject.COLLISION_GROUPS.cars,
+                         collisionGroup: BaseObject.COLLISION_GROUPS.cars,
                          velocity: Car.VELOCITY * 0.85});
             
             this.body.collide = this.handleCollision.bind(this);
@@ -23,13 +23,16 @@ game.module(
             
             if (!this.lastTileData || (this.lastTileData != tileData)) {
                 
-                var newDirectionIndex = Math.floor(Math.random() * tileData.allowedDirections.length);
-                
-                var newDirection = tileData.allowedDirections[newDirectionIndex];
-                
-                if (!this.areOppositeDirections(this.direction, newDirection)) {
+                if (!this.think(tileData)) {
                     
-                    this.requestedDirection = newDirection;
+                    var newDirectionIndex = Math.floor(Math.random() * tileData.allowedDirections.length);
+                    
+                    var newDirection = tileData.allowedDirections[newDirectionIndex];
+                    
+                    if (!this.areOppositeDirections(this.direction, newDirection)) {
+                        
+                        this.requestedDirection = newDirection;
+                    }
                 }
                 
                 this.lastTileData = tileData;
@@ -38,13 +41,81 @@ game.module(
             }
         },
         
+        isCloseEnoughToOtherCar: function(otherCar) {
+            
+            return Math.distance(
+                        otherCar.sprite.position.x, otherCar.sprite.position.y,
+                        this.sprite.position.x, this.sprite.position.y) < (Map.TILE_WIDTH * 4);
+        },
+        
+        think: function(tileData) {
+            
+            var rethought = false;
+            
+            if (!((game.system.timer.last - this.lastThinkTime) < (100 * Car.VELOCITY_REFERENCE / Car.VELOCITY))) {
+                
+                console.log("thinked!");
+                
+                this.lastThinkTime = game.system.timer.last;
+                
+                var cars = game.scene.cars;
+                
+                var i;
+                for (i = 0; i < cars.length; i++) {
+                    
+                    var otherCar = cars[i];
+                    
+                    if (!(otherCar === this)) {
+                        
+                        if (this.isCloseEnoughToOtherCar(otherCar)) {
+                            
+                            console.log("isCloseEnoughToOtherCar! index: " + i);
+                            
+                            if (this.areApproaching(this.direction, this.sprite.position,
+                                                    otherCar.direction, otherCar.sprite.position)) {
+                                
+                                console.log("areApproaching! teste more, please.");
+                                
+                                var oppositeDirection = TileData.OPPOSITE_DIRECTIONS[this.direction];
+                                
+                                if ((!this.areApproaching(oppositeDirection, this.sprite.position,
+                                                          otherCar.direction, otherCar.sprite.position))
+                                    &&
+                                    (!this.areApproaching(oppositeDirection,
+                                                          this.sprite.position,
+                                                          game.scene.player.direction,
+                                                          game.scene.player.sprite.position))) {
+                                    
+                                    console.log("yeah! areApproaching!");
+                                    
+                                    this.requestedDirection = oppositeDirection;
+                                    
+                                    if (otherCar instanceof Enemy) {
+                                        
+                                        otherCar.lastThinkTime = game.system.timer.last + 500;
+                                        
+                                        otherCar.shortDisaccelerate();
+                                    }
+                                    else {
+                                        
+                                        this.lastThinkTime = game.system.timer.last + 1000;
+                                    }
+                                    
+                                    rethought = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            return rethought;
+        },
+        
         afterCollide: function() {
-            // console.log('afterCollide!');
         },
         
         handleCollision: function(other) {
-            
-            // console.log('handleCollision!');
             
             var otherCar = other.gameObject;
             
@@ -69,9 +140,18 @@ game.module(
                     
                     this.destroy();
                 }
+                else if ((otherCar instanceof Player) &&
+                         (!sameDirections) &&
+                         (this.angleVectorsIntersect(this.sprite.rotation, this.sprite.position,
+                                                     otherCar.sprite.rotation, otherCar.sprite.position))) {
+                    
+                    console.log('enemy destroyed! angle vectors intersect!');
+                    
+                    this.destroy();
+                }
                 else {
                     
-                    if (!((game.system.timer.last - this.lastCollisionTime) < 4000)) {
+                    if (!((game.system.timer.last - this.lastCollisionTime) < (4000 * Car.VELOCITY_REFERENCE / Car.VELOCITY))) {
                         
                         this.lastCollisionTime = game.system.timer.last;
                         
@@ -85,9 +165,9 @@ game.module(
                     }
                     
                     if (((this.direction == 'down') && (this.sprite.position.y < otherCar.sprite.position.y)) ||
-                         ((this.direction == 'up') && (this.sprite.position.y > otherCar.sprite.position.y)) ||
-                         ((this.direction == 'right') && (this.sprite.position.x < otherCar.sprite.position.x)) ||
-                         ((this.direction == 'left') && (this.sprite.position.x > otherCar.sprite.position.x))) {
+                        ((this.direction == 'up') && (this.sprite.position.y > otherCar.sprite.position.y)) ||
+                        ((this.direction == 'right') && (this.sprite.position.x < otherCar.sprite.position.x)) ||
+                        ((this.direction == 'left') && (this.sprite.position.x > otherCar.sprite.position.x))) {
                         
                         if (sameDirections) {
                             console.log('enemy disaccelerated!');

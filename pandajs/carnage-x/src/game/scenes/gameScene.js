@@ -21,6 +21,8 @@ game.module(
         
         backgroundColor: 0xffffff,
         
+        cars: [],
+        
         remainingEnemies: 0,
         
         stopped: false,
@@ -69,6 +71,8 @@ game.module(
         spawnPlayer: function() {
             
             this.player = new Player();
+            
+            this.cars.push(this.player);
         },
         
         spawnEnemies: function() {
@@ -76,6 +80,8 @@ game.module(
             _.each(game.scene.map.spawnAt.enemies, function(spawnAt) {
                 
                 var enemy = new Enemy({spawnAt: spawnAt});
+                
+                this.cars.push(enemy);
                 
                 this.remainingEnemies++;
                 
@@ -262,6 +268,10 @@ game.module(
             obj.removeBody();
             
             if (obj instanceof Enemy) {
+                
+                var enemyIndex = _.indexOf(this.cars, obj);
+                
+                this.cars.splice(enemyIndex, 1);
                 
                 this.remainingEnemies--;
                 

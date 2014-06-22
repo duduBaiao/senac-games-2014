@@ -16,5 +16,4 @@ game.module(
     game.start(MainScene);
     
     //game.start(GameScene);
-    
 });

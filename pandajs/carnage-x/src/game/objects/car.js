@@ -170,9 +170,9 @@ game.module(
     
     _.extend(Car,
         {
-           ACCELERATION: 4.0 / 1.0,
+           ACCELERATION: 4.0 * 1.0,
            
-           VELOCITY: 400.0 / 1.0,
+           VELOCITY: 400.0 * 1.0,
            
            VELOCITY_REFERENCE: 400.0,
            

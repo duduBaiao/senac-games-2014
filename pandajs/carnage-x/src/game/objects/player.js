@@ -12,8 +12,8 @@ game.module(
             
             this._super({imageName: 'redCar',
                          spawnAt: game.scene.map.spawnAt.player,
-                         collideAgainst: BaseObject.COLLISION_GROUPS.enemies,
-                         collisionGroup: BaseObject.COLLISION_GROUPS.player});
+                         collideAgainst: BaseObject.COLLISION_GROUPS.cars,
+                         collisionGroup: BaseObject.COLLISION_GROUPS.cars});
         }
     });
 });

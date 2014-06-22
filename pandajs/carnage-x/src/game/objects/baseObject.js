@@ -18,6 +18,20 @@ game.module(
             return (dotProduct == -1);
         },
         
+        areApproaching: function(directionA, positionA, directionB, positionB) {
+            
+            var directionVectorA = TileData.DIRECTIONS_VECTORS[directionA];
+            var directionVectorB = TileData.DIRECTIONS_VECTORS[directionB];
+            
+            var currentDistance = Math.distance(positionA.x, positionA.y,
+                                                positionB.x, positionB.y);
+            
+            var futureDistance = Math.distance(positionA.x + directionVectorA.x, positionA.y + directionVectorA.y,
+                                               positionB.x + directionVectorB.x, positionB.y + directionVectorB.y);
+            
+            return (futureDistance < currentDistance);
+        },
+        
         arePerpendicularDirections: function(currentDirection, newDirection) {
             
             var currentDirectionVector = TileData.DIRECTIONS_VECTORS[currentDirection];
@@ -87,10 +101,12 @@ game.module(
             return this.vectorsIntersect(vectorA, startPointA, vectorB, startPointB);
         },
         
-        angleVectorsIntersect: function(rotationA, startPointA, rotationB, startPointB) {
+        angleVectorsIntersect: function(rotationA, startPointA, rotationB, startPointB, factor) {
             
-            var vectorA = this.angleToVector(rotationA).normalize().multiply(Map.TILE_WIDTH, Map.TILE_WIDTH);
-            var vectorB = this.angleToVector(rotationB).normalize().multiply(Map.TILE_WIDTH, Map.TILE_WIDTH);
+            var distance = Map.TILE_WIDTH * (factor || 1);
+            
+            var vectorA = this.angleToVector(rotationA).normalize().multiply(distance, distance);
+            var vectorB = this.angleToVector(rotationB).normalize().multiply(distance, distance);
             
             return this.vectorsIntersect(vectorA, startPointA, vectorB, startPointB);
         },
@@ -198,7 +214,12 @@ game.module(
         
         disaccelerate: function() {
             
-            this.acceleration *= 0.06;
+            this.acceleration *= 0.1;
+        },
+        
+        shortDisaccelerate: function() {
+            
+            this.acceleration *= 0.5;
         },
         
         stopAWhile: function() {
@@ -219,8 +240,7 @@ game.module(
     });
     
     BaseObject.COLLISION_GROUPS = {
-        player: 0,
-        enemies: 1,
-        shots: 2
+        cars: 0,
+        shots: 1
     };
 });

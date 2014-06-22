@@ -27,6 +27,13 @@ game.module(
                 left:  new game.Vector(-1, 0)
             },
             
+            OPPOSITE_DIRECTIONS: {
+                up: 'down',
+                down: 'up',
+                left: 'right',
+                right: 'left'
+            },
+            
             ANIMATION_FRAMES: {
                 up: 0,
                 right: 1,
