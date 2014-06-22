@@ -114,5 +114,7 @@ game.module(
     game.addAudio('sound/explosionSnd.m4a', 'explosionSnd');
     game.addAudio('sound/hitShotSnd.m4a', 'hitShotSnd');
     game.addAudio('sound/carCrashSnd.m4a', 'carCrashSnd');
+    game.addAudio('sound/fuelLow.m4a', 'fuelLow');
+    
     
 });

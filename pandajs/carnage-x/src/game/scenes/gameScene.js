@@ -31,6 +31,8 @@ game.module(
         
         shotRecharging: false,
         
+        fuelLowIsNotPlaying: true,
+        
         init: function() {
             
             this.startAudio();
@@ -247,6 +249,8 @@ game.module(
             
             this.remaingTime -= game.system.delta;
             
+            this.checkEndOfGas();
+            
             if (this.remaingTime > 0) {
                 
                 this.fuelBar.draw(this.remaingTime / this.map.timeLimit * 100.0);
@@ -288,11 +292,17 @@ game.module(
                 
                 this.stopped = true;
                 
-                game.audio.stopMusic();
-                
                 new EndLevelScreen(win);
                 
             }).bind(this));
+        },
+        
+        checkEndOfGas: function() {
+            if (this.remaingTime < 3 && this.fuelLowIsNotPlaying) {
+                game.audio.stopMusic();
+                game.audio.playSound("fuelLow");
+                this.fuelLowIsNotPlaying = false;
+            }
         },
         
         reload: function() {
