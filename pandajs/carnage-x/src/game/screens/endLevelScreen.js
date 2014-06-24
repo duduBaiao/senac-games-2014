@@ -34,7 +34,7 @@ game.module(
                            this.restart.bind(this));
             
             this.btnContinue =
-                new Button("btnResumeIdle",
+                new Button("btnNextLevelIdle",
                            widthCenter,
                            heightCenter * 1.05,
                            this.gameContinue.bind(this));
