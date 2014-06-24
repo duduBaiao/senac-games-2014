@@ -34,6 +34,8 @@ game.module(
     game.addAsset('sprites/pauseScreen/btnMainMenuMouseOver.png', 'btnMainMenuMouseOver');
     game.addAsset('sprites/pauseScreen/btnRestartIdle.png', 'btnRestartIdle');
     game.addAsset('sprites/pauseScreen/btnRestartMouseOver.png', 'btnRestartMouseOver');
+    game.addAsset('sprites/pauseScreen/btnNextLevelIdle.png', 'btnNextLevelIdle');
+    game.addAsset('sprites/pauseScreen/btnNextLevelMouseOver.png', 'btnNextLevelMouseOver');
     
     game.addAsset('sprites/pauseScreen/tltPaused.png', 'tltPaused');
     game.addAsset('sprites/pauseScreen/tltLevelCleared.png', 'tltLevelCleared');
