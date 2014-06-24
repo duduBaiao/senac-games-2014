@@ -4,6 +4,7 @@ game.module(
 .require(
     'game.scenes.gameScene',
     'game.scenes.howToPlayScene',
+    'game.scenes.hiScoresScene',
     'game.scenes.creditsScene',
     'game.controls.button',
     'game.gameState'
@@ -52,7 +53,8 @@ game.module(
             var btnHowToPlay = 
                 new Button("btnHowToPlayIdle", initialPosX, game.system.height * 0.65,
                     function() {
-                    game.scene.addTimer(500,function(){
+                    game.audio.playSound("clickSnd");
+                    game.scene.addTimer(300,function(){
                         game.system.setScene(HowToPlayScene);
                     });
                 });
@@ -60,14 +62,21 @@ game.module(
             this.stage.addChild(btnHowToPlay);
             this.startIntroBtnAnim(btnHowToPlay, 300);
             
-            var btnHiScore = new Button("btnHiScoresIdle", initialPosX, game.system.height * 0.75);
+            var btnHiScore = new Button("btnHiScoresIdle", initialPosX, game.system.height * 0.75,
+                    function() {
+                        game.audio.playSound("clickSnd");
+                        game.scene.addTimer(300,function(){
+                            game.system.setScene(HiScoresScene);
+                        });
+                    });
             this.stage.addChild(btnHiScore);
             this.startIntroBtnAnim(btnHiScore, 600);
             
             var btnCredits = 
                 new Button("btnCreditsIdle", initialPosX, game.system.height * 0.85,
                     function(){
-                    game.scene.addTimer(500,function(){
+                    game.audio.playSound("clickSnd");
+                    game.scene.addTimer(300,function(){
                         game.system.setScene(CreditsScene);
                     });
                 });

@@ -21,7 +21,10 @@ game.module(
             
             var btnBack = new Button("btnBack", initialPosX, game.system.height * 0.90,
                     function() {
-                game.system.setScene(MainScene);
+                        game.audio.playSound("clickSnd");
+                        game.scene.addTimer(300,function(){
+                            game.system.setScene(MainScene);
+                        });
                     });
             this.stage.addChild(btnBack);
                         
