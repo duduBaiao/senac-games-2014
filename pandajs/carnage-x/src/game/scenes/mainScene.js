@@ -3,6 +3,8 @@ game.module(
 )
 .require(
     'game.scenes.gameScene',
+    'game.scenes.howToPlayScene',
+    'game.scenes.creditsScene',
     'game.controls.button',
     'game.gameState'
 )
@@ -48,7 +50,12 @@ game.module(
             this.startIntroBtnAnim(btnPlay,0);
             
             var btnHowToPlay = 
-                new Button("btnHowToPlayIdle", initialPosX, game.system.height * 0.65);
+                new Button("btnHowToPlayIdle", initialPosX, game.system.height * 0.65,
+                    function() {
+                    game.scene.addTimer(500,function(){
+                        game.system.setScene(HowToPlayScene);
+                    });
+                });
             
             this.stage.addChild(btnHowToPlay);
             this.startIntroBtnAnim(btnHowToPlay, 300);
@@ -57,7 +64,13 @@ game.module(
             this.stage.addChild(btnHiScore);
             this.startIntroBtnAnim(btnHiScore, 600);
             
-            var btnCredits = new Button("btnCreditsIdle", initialPosX, game.system.height * 0.85);
+            var btnCredits = 
+                new Button("btnCreditsIdle", initialPosX, game.system.height * 0.85,
+                    function(){
+                    game.scene.addTimer(500,function(){
+                        game.system.setScene(CreditsScene);
+                    });
+                });
             this.stage.addChild(btnCredits);
             this.startIntroBtnAnim(btnCredits, 900);
         },

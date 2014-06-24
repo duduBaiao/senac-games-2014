@@ -20,7 +20,13 @@ game.module(
     game.addAsset('sprites/mainScreen/btnHiScoresMouseOver.png', 'btnHiScoresMouseOver');
     game.addAsset('sprites/mainScreen/btnCreditsIdle.png', 'btnCreditsIdle');
     game.addAsset('sprites/mainScreen/btnCreditsMouseOver.png', 'btnCreditsMouseOver');
-
+    //TODO substituir pelo botão back definitivo
+    game.addAsset('sprites/mainScreen/btnPlayIdle.png', 'btnBack');
+    game.addAsset('sprites/mainScreen/btnPlayMouseOver.png', 'btnBack');
+    
+    game.addAsset('sprites/mainScreen/bgCreditsScreen.jpg', 'bgCreditsScreen');
+    game.addAsset('sprites/mainScreen/bgHowToPlayScreen.jpg', 'bgHowToPlayScreen');
+    
     game.addAsset('sprites/pauseScreen/shadow.png', 'shadow');
     game.addAsset('sprites/pauseScreen/btnResumeIdle.png', 'btnResumeIdle');
     game.addAsset('sprites/pauseScreen/btnResumeMouseOver.png', 'btnResumeMouseOver');
@@ -115,6 +121,9 @@ game.module(
     game.addAudio('sound/hitShotSnd.m4a', 'hitShotSnd');
     game.addAudio('sound/carCrashSnd.m4a', 'carCrashSnd');
     game.addAudio('sound/fuelLow.m4a', 'fuelLow');
+    game.addAudio('sound/clickGun.m4a', 'clickGun');
+    game.addAudio('sound/bgCredits.m4a', 'bgCredits');
+    game.addAudio('sound/bgHowToPlay.m4a', 'bgHowToPlay');
     
     
 });

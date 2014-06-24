@@ -185,7 +185,10 @@ game.module(
         
         fire: function() {
             
-            if (this.shotRecharging) return;
+            if (this.shotRecharging){
+                game.audio.playSound("clickGun");
+                return;
+            }
             
             this.shotRecharging = true;
             
