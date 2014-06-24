@@ -95,6 +95,9 @@ game.module(
             this.shotBar = new Bar({y: 55, foregroundColor: 0xB10801});
             
             var barsHUD = new game.Sprite("barsHUD");
+            barsHUD.anchor.x = 0.5;
+            barsHUD.position.x = game.system.width / 2.0;
+            
             this.stage.addChild(barsHUD);
         },
         
