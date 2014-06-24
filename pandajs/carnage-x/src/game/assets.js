@@ -108,7 +108,7 @@ game.module(
     game.addAsset('sprites/explosion/carDie12.png', 'carDie12');
     game.addAsset('sprites/explosion/carDie13.png', 'carDie13');
     
-    game.addAsset('sprites/hud/barsHUD.png', 'barsHUD');
+    game.addAsset('sprites/hud/barsHud.png', 'barsHUD');
     
     game.addAsset('sprites/dummy.png', 'dummy');
     
