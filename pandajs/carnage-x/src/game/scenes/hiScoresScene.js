@@ -1,21 +1,21 @@
 game.module(
-    'game.scenes.creditsScene'
+    'game.scenes.hiScoresScene'
 )
 .require(
     'game.controls.button'
 )
 .body(function() {
     
-    CreditsScene = game.Scene.extend({
+    HiScoresScene = game.Scene.extend({
         init: function() {
             
-            game.audio.playMusic('bgCredits');
+            game.audio.playMusic('bgHowToPlay');
             
-            var htpScreenBG = new game.Sprite("bgCreditsScreen");
+            var hiScoresScreenBG = new game.Sprite("bgHiScoresScreen");
             
-            Utils.Sprite.sizeToFit(htpScreenBG, 1024, 672);
+            Utils.Sprite.sizeToFit(hiScoresScreenBG, 1024, 672);
             
-            this.stage.addChild(htpScreenBG);
+            this.stage.addChild(hiScoresScreenBG);
             
             var initialPosX = game.system.width * (game.system.width < game.system.height ? 0.75 : 0.85);
             

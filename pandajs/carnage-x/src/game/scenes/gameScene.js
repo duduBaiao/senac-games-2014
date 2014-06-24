@@ -91,17 +91,11 @@ game.module(
         },
         
         initializeHUD: function() {
+            this.fuelBar = new Bar({y: 13, foregroundColor: 0xFFFFFF});
+            this.shotBar = new Bar({y: 55, foregroundColor: 0xB10801});
             
-            this.fuelBar = new Bar({y: 32, foregroundColor: 0x66CCFF, backgroundColor: 0x4084AA});
-            
-            this.shotBar = new Bar({y: 74});
-            
-            var iconWidth = 32;
-            
-            var iconX = this.fuelBar.x - (iconWidth * 1.3);
-            
-            new Icon('fuel_icon', iconX, this.fuelBar.y - 6, {width: iconWidth, height: iconWidth});
-            new Icon('shot_icon', iconX, this.shotBar.y - 4, {width: iconWidth, height: iconWidth});
+            var barsHUD = new game.Sprite("barsHUD");
+            this.stage.addChild(barsHUD);
         },
         
         initializeCamera: function() {
@@ -283,21 +277,25 @@ game.module(
                 this.remainingEnemies--;
                 
                 if (this.remainingEnemies == 0) {
-                    
                     this.endLevel(true);
                 }
             }
         },
         
         endLevel: function(win) {
-            
             game.scene.addTimer(500, (function() {
-                
                 this.stopped = true;
-                
+                this.playEndLevelSound(win);
                 new EndLevelScreen(win);
-                
             }).bind(this));
+        },
+        
+        playEndLevelSound: function (win){
+            if (win){
+                game.audio.playSound("applauseSnd");
+            } else {
+                game.audio.playSound("booSnd");
+            }  
         },
         
         checkEndOfGas: function() {

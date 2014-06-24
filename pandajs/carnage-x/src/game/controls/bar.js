@@ -11,10 +11,10 @@ game.module(
         init: function(settings) {
             
             this.foregroundColor = settings.foregroundColor || 0xFFFF33;
-            this.backgroundColor = settings.backgroundColor || 0xDE8501;
+            this.backgroundColor = settings.backgroundColor || 0x000000;
             
-            this.width = settings.width || 300;
-            this.height = settings.height || 20;
+            this.width = settings.width || 310;
+            this.height = settings.height || 25;
             
             this.x = settings.x || ((game.system.width - this.width) / 2.0);
             this.y = settings.y || 0;
@@ -28,7 +28,7 @@ game.module(
             
             this.graphics.clear();
             
-            this.graphics.beginFill(this.backgroundColor, 0.9);
+            this.graphics.beginFill(this.backgroundColor);
             
             this.graphics.drawRect(this.x, this.y, this.width, this.height);
             
